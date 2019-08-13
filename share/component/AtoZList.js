@@ -11,6 +11,11 @@ export default class AtoZList extends React.Component {
     keyListRef = React.createRef();
     listOffsetY = 0;
     keysOffsetY = [];
+    throttledTouchHandler = _.throttle(this.handListKeyTouch.bind(this), 50, {
+        leading: true,
+        trailing: false
+    });
+
 
     state = {
         currKey: null
@@ -27,6 +32,7 @@ export default class AtoZList extends React.Component {
             currKey: index
         });
         this.sectionListRef.current.scrollToLocation({
+            animated: true,
             sectionIndex: index,
             itemIndex: 0,
             viewPosition: 0
@@ -39,7 +45,9 @@ export default class AtoZList extends React.Component {
             data,
             renderItem,
             renderSectionHeader,
-            onPartition
+            onPartition,
+            onScrollToIndexFailed,
+            ...rest
         } = this.props;
         listKeys = [
             ...listKeys,
@@ -65,19 +73,26 @@ export default class AtoZList extends React.Component {
         }));
         return (
             <View style={styles.container}>
-                <Toast
-                    position={Toast.positions.CENTER}
-                    animation={true}
-                    opacity={0.5}
-                    visible={this.state.currKey != null}
-                >
-                    {listKeys[this.state.currKey]}
-                </Toast>
+                {
+                    this.state.currKey !== null && (
+                        <Toast
+                            position={Toast.positions.CENTER}
+                            animation={true}
+                            opacity={0.5}
+                            visible={true}
+                        >
+                            {listKeys[this.state.currKey]}
+                        </Toast>
+                    )
+                }
+
                 <SectionList
+                    {...rest}
                     ref={this.sectionListRef}
                     style={styles.sectionList}
                     renderItem={renderItem}
                     renderSectionHeader={renderSectionHeader}
+                    onScrollToIndexFailed={onScrollToIndexFailed}
                     sections={sections}
                     keyExtractor={(item, index) => item + index}
                 />
@@ -90,11 +105,17 @@ export default class AtoZList extends React.Component {
                       }}
                       onStartShouldSetResponder={evt =>  true}
                       onMoveShouldSetResponder ={evt =>  true}
-                      onResponderGrant={this.handListKeyTouch.bind(this)}
-                      onResponderMove={_.throttle(this.handListKeyTouch.bind(this), 300)}
+                      onResponderGrant={(evt) => {
+                          evt.persist();
+                          this.throttledTouchHandler(evt);
+                      }}
+                      onResponderMove={(evt) => {
+                          evt.persist();
+                          this.throttledTouchHandler(evt);
+                      }}
                       onResponderRelease={evt => {
                           this.setState({
-                              currKey: null
+                              currKey: null,
                           })
                       }}
                 >
@@ -124,7 +145,10 @@ AtoZList.defaultProps = {
     ),
     renderSectionHeader: ({section: {title}}) => (
         <Text style={styles.sectionTitle}>{title}</Text>
-    )
+    ),
+    onScrollToIndexFailed: (error) => {
+        console.log("onScrollToIndexFailed called. Ignoring error. override the method to handle the method");
+    }
 };
 
 AtoZList.propTypes = {
