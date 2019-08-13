@@ -22,11 +22,15 @@ export default class AtoZList extends React.Component {
     };
 
     handListKeyTouch(evt) {
-        let index = _.findIndex(this.keysOffsetY, offset => {
-            return this.listOffsetY + offset > evt.nativeEvent.pageY
+        let index = _.findLastIndex(this.keysOffsetY, offset => {
+            return this.listOffsetY + offset < evt.nativeEvent.pageY
         });
         if (index === -1) {
-            index = this.keysOffsetY.length - 1
+            if (evt.nativeEvent.pageY > this.listOffsetY) {
+                index = this.keysOffsetY.length - 1;
+            } else {
+                index = 0;
+            }
         }
         this.setState({
             currKey: index
@@ -147,7 +151,7 @@ AtoZList.defaultProps = {
         <Text style={styles.sectionTitle}>{title}</Text>
     ),
     onScrollToIndexFailed: (error) => {
-        console.log("onScrollToIndexFailed called. Ignoring error. override the method to handle the method");
+        // Suppress the error since it does not matter if scrolling failed
     }
 };
 
