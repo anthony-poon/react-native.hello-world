@@ -7,11 +7,11 @@ import {COLOR_LIGHT} from "../styles/var";
 import Toast from 'react-native-root-toast';
 
 export default class AtoZList extends React.Component {
-    sectionListRef = React.createRef();
-    keyListRef = React.createRef();
-    listOffsetY = 0;
-    keysOffsetY = [];
-    throttledTouchHandler = _.throttle(this.handListKeyTouch.bind(this), 50, {
+    mainListRef = React.createRef();
+    indexListRef = React.createRef();
+    indexListOffsetY = 0;
+    indexesOffsetY = [];
+    throttledTouchHandler = _.throttle(this.handleIndexListTouch.bind(this), 50, {
         leading: true,
         trailing: false
     });
@@ -21,13 +21,13 @@ export default class AtoZList extends React.Component {
         currKey: null
     };
 
-    handListKeyTouch(evt) {
-        let index = _.findLastIndex(this.keysOffsetY, offset => {
-            return this.listOffsetY + offset < evt.nativeEvent.pageY
+    handleIndexListTouch(evt) {
+        let index = _.findLastIndex(this.indexesOffsetY, offset => {
+            return this.indexListOffsetY + offset < evt.nativeEvent.pageY
         });
         if (index === -1) {
-            if (evt.nativeEvent.pageY > this.listOffsetY) {
-                index = this.keysOffsetY.length - 1;
+            if (evt.nativeEvent.pageY > this.indexListOffsetY) {
+                index = this.indexesOffsetY.length - 1;
             } else {
                 index = 0;
             }
@@ -35,7 +35,7 @@ export default class AtoZList extends React.Component {
         this.setState({
             currKey: index
         });
-        this.sectionListRef.current.scrollToLocation({
+        this.mainListRef.current.scrollToLocation({
             animated: true,
             sectionIndex: index,
             itemIndex: 0,
@@ -45,7 +45,7 @@ export default class AtoZList extends React.Component {
 
     render() {
         let {
-            listKeys,
+            indexes,
             data,
             renderItem,
             renderSectionHeader,
@@ -53,15 +53,15 @@ export default class AtoZList extends React.Component {
             onScrollToIndexFailed,
             ...rest
         } = this.props;
-        listKeys = [
-            ...listKeys,
+        indexes = [
+            ...indexes,
             "#"
         ];
-        const partition = Array.from(Array(listKeys.length), () => []);
+        const partition = Array.from(Array(indexes.length), () => []);
         data.forEach(d => {
             // Use provided partition function to determine which session to put into. if return false or null, put into last
             const key = onPartition(d);
-            if (isNaN(key) || key < 0 || key >= listKeys.length) {
+            if (isNaN(key) || key < 0 || key >= indexes.length) {
                 throw new Error("Invalid return value from onPartition function. Must return an integer between 0 and length of list keys - 1 or false")
             }
             if (key !== false && key !== null) {
@@ -71,7 +71,7 @@ export default class AtoZList extends React.Component {
             }
         });
 
-        const sections = listKeys.map((k, index) => ({
+        const sections = indexes.map((k, index) => ({
             title: k,
             data: partition[index]
         }));
@@ -85,26 +85,26 @@ export default class AtoZList extends React.Component {
                             opacity={0.5}
                             visible={true}
                         >
-                            {listKeys[this.state.currKey]}
+                            {indexes[this.state.currKey]}
                         </Toast>
                     )
                 }
 
                 <SectionList
                     {...rest}
-                    ref={this.sectionListRef}
-                    style={styles.sectionList}
+                    ref={this.mainListRef}
+                    style={styles.mainList}
                     renderItem={renderItem}
                     renderSectionHeader={renderSectionHeader}
                     onScrollToIndexFailed={onScrollToIndexFailed}
                     sections={sections}
                     keyExtractor={(item, index) => item + index}
                 />
-                <View style={styles.listKeyWrapper}
-                      ref={this.keyListRef}
+                <View style={styles.indexList}
+                      ref={this.indexListRef}
                       onLayout={evt => {
-                          this.keyListRef.current.measure((fx, fy, width, height, px, py) => {
-                              this.listOffsetY = py;
+                          this.indexListRef.current.measure((fx, fy, width, height, px, py) => {
+                              this.indexListOffsetY = py;
                           })
                       }}
                       onStartShouldSetResponder={evt =>  true}
@@ -124,13 +124,13 @@ export default class AtoZList extends React.Component {
                       }}
                 >
                     {
-                        listKeys.map((key, index) => (
+                        indexes.map((key, index) => (
                             <View key={index}
                                   onLayout={evt => {
-                                      this.keysOffsetY.push(evt.nativeEvent.layout.y)
+                                      this.indexesOffsetY.push(evt.nativeEvent.layout.y)
                                   }}
                             >
-                                <Text style={styles.listKey}>{key}</Text>
+                                <Text style={styles.index}>{key}</Text>
                             </View>
                         ))
                     }
@@ -141,14 +141,14 @@ export default class AtoZList extends React.Component {
 }
 
 AtoZList.defaultProps = {
-    listKeys: _.range(65, 91).map(ascii => String.fromCharCode(ascii)),
+    indexes: _.range(65, 91).map(ascii => String.fromCharCode(ascii)),
     renderItem: ({item, index, section}) => (
-        <View style={styles.listItem}>
+        <View style={styles.mainListItem}>
             <Text key={index}>{item}</Text>
         </View>
     ),
     renderSectionHeader: ({section: {title}}) => (
-        <Text style={styles.sectionTitle}>{title}</Text>
+        <Text style={styles.mainListTitle}>{title}</Text>
     ),
     onScrollToIndexFailed: (error) => {
         // Suppress the error since it does not matter if scrolling failed
@@ -156,7 +156,7 @@ AtoZList.defaultProps = {
 };
 
 AtoZList.propTypes = {
-    listKeys: PropTypes.arrayOf(PropTypes.string),
+    indexes: PropTypes.arrayOf(PropTypes.string),
     renderItem: PropTypes.func,
     renderSectionHeader: PropTypes.func,
     data: PropTypes.arrayOf(PropTypes.any).isRequired,
@@ -167,10 +167,10 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row"
     },
-    sectionList: {
+    mainList: {
         flex: 1,
     },
-    sectionTitle: {
+    mainListTitle: {
         ...Padding.py1,
         ...Margin.mx2,
         ...TextStyle.textPrimary,
@@ -181,17 +181,17 @@ const styles = StyleSheet.create({
         borderColor: COLOR_LIGHT,
 
     },
-    listItem: {
+    mainListItem: {
         ...Padding.py3,
         ...Margin.mx2,
         borderBottomWidth: 1,
         borderColor: COLOR_LIGHT
     },
-    listKeyWrapper: {
+    indexList: {
         ...Padding.py3,
         alignItems: "center",
     },
-    listKey: {
+    index: {
         ...TextStyle.sm,
         ...Padding.py1,
         ...Padding.px1,
