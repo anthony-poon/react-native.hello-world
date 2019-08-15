@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View, StatusBar} from 'react-native';
+import {View} from 'react-native';
 import AtoZApp from "./views/AtoZApp";
 import IndexApp from "./views/IndexApp"
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigatorIcon from "./shares/components/NavigatorIcon";
-import TimeUtilApp from "./shares/components/TimeUtilApp";
 
 const BottomTabNavigator = createBottomTabNavigator({
     Home: {
@@ -33,20 +32,7 @@ const BottomTabNavigator = createBottomTabNavigator({
                 />
             ),
         }
-    },
-    TimeUtilApp: {
-        screen: TimeUtilApp,
-        navigationOptions: {
-            tabBarLabel: <View/>,
-            tabBarIcon: ({focused}) => (
-                <NavigatorIcon
-                    text={"TimeUtilApp"}
-                    icon={"md-book"}
-                    focused={focused}
-                />
-            ),
-        }
-    },
+    }
 });
 
 const MainNavigator = createStackNavigator({
