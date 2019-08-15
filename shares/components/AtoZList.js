@@ -2,8 +2,8 @@ import {StyleSheet, Text, View, SectionList} from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {TextStyle, Padding, Margin} from "../../share/style"
-import {COLOR_LIGHT} from "../style/var";
+import {TextStyle, Padding, Margin} from "../styles"
+import {COLOR_LIGHT} from "../styles/var";
 import Toast from 'react-native-root-toast';
 
 export default class AtoZList extends React.Component {

@@ -1,5 +1,5 @@
 import {View} from "react-native";
-import AtoZList from "../share/component/AtoZList";
+import AtoZList from "../shares/components/AtoZList";
 import React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 export default class AtoZApp extends React.Component {

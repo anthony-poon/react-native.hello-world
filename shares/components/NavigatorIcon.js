@@ -2,7 +2,7 @@ import React from "react";
 import {View, Text, StyleSheet} from "react-native"
 import PropTypes from "prop-types";
 import {Ionicons} from "@expo/vector-icons";
-import {TextStyle} from "../style";
+import {TextStyle} from "../styles";
 
 export default class NavigatorIcon extends React.Component {
     render() {
