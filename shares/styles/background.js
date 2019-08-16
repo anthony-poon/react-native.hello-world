@@ -1,7 +1,35 @@
+import * as Color from "./var";
+
 const style = {
-    py0: {
-        paddingTop: 0,
-        paddingBottom: 0
+    primary: {
+        backgroundColor: Color.COLOR_PRIMARY
+    },
+    secondary: {
+        backgroundColor: Color.COLOR_SECONDARY
+    },
+    success: {
+        backgroundColor: Color.COLOR_SUCCESS
+    },
+    danger: {
+        backgroundColor: Color.COLOR_DANGER
+    },
+    warning: {
+        backgroundColor: Color.COLOR_WARNING
+    },
+    info: {
+        backgroundColor: Color.COLOR_INFO
+    },
+    light: {
+        backgroundColor: Color.COLOR_LIGHT
+    },
+    dark: {
+        backgroundColor: Color.COLOR_DARK
+    },
+    muted: {
+        backgroundColor: Color.COLOR_MUTED
+    },
+    white: {
+        backgroundColor: Color.COLOR_WHITE
     },
     py1: {
         paddingTop: 4,

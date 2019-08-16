@@ -1,9 +1,11 @@
 import TextStyle from "./text";
-import Padding from "./padding";
-import Margin from "./margin";
+import SpacingStyle from "./spacing";
+import BackgroundStyle from "./background"
+import BorderStyle from "./border";
 
 export {
     TextStyle,
-    Padding,
-    Margin
+    SpacingStyle,
+    BackgroundStyle,
+    BorderStyle
 }

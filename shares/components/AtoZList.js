@@ -2,8 +2,8 @@ import {StyleSheet, Text, View, SectionList} from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {TextStyle, Padding, Margin} from "../styles"
-import {COLOR_LIGHT} from "../styles/var";
+import {TextStyle, SpacingStyle, BackgroundStyle, BorderStyle} from "../styles"
+import memoize from "memoize-one";
 import Toast from 'react-native-root-toast';
 
 export default class AtoZList extends React.Component {
@@ -11,7 +11,7 @@ export default class AtoZList extends React.Component {
     indexListRef = React.createRef();
     indexListOffsetY = 0;
     indexesOffsetY = [];
-    throttledTouchHandler = _.throttle(this.handleIndexListTouch.bind(this), 50, {
+    throttledTouchHandler = _.throttle(this.handleIndexListTouch.bind(this), 100, {
         leading: true,
         trailing: false
     });
@@ -36,7 +36,7 @@ export default class AtoZList extends React.Component {
             currKey: index
         });
         this.mainListRef.current.scrollToLocation({
-            animated: true,
+            animated: false,
             sectionIndex: index,
             itemIndex: 0,
             viewPosition: 0
@@ -49,6 +49,7 @@ export default class AtoZList extends React.Component {
             data,
             renderItem,
             renderSectionHeader,
+            keyExtractor,
             onPartition,
             onScrollToIndexFailed,
             ...rest
@@ -94,11 +95,12 @@ export default class AtoZList extends React.Component {
                     {...rest}
                     ref={this.mainListRef}
                     style={styles.mainList}
+                    stickySectionHeadersEnabled={true}
                     renderItem={renderItem}
                     renderSectionHeader={renderSectionHeader}
+                    keyExtractor={keyExtractor}
                     onScrollToIndexFailed={onScrollToIndexFailed}
                     sections={sections}
-                    keyExtractor={(item, index) => item + index}
                 />
                 <View style={styles.indexList}
                       ref={this.indexListRef}
@@ -147,11 +149,14 @@ AtoZList.defaultProps = {
             <Text key={index}>{item}</Text>
         </View>
     ),
-    renderSectionHeader: ({section: {title}}) => (
-        <Text style={styles.mainListTitle}>{title}</Text>
+    renderSectionHeader: ({section: {title, data}}) => (
+        data.length > 0 && <Text style={styles.mainListTitle}>{title}</Text>
     ),
     onScrollToIndexFailed: (error) => {
         // Suppress the error since it does not matter if scrolling failed
+    },
+    keyExtractor: (item, key) => {
+        return key;
     }
 };
 
@@ -171,29 +176,27 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     mainListTitle: {
-        ...Padding.py1,
-        ...Margin.mx2,
-        ...TextStyle.textPrimary,
+        ...SpacingStyle.py1,
+        ...SpacingStyle.px2,
+        ...TextStyle.secondary,
         ...TextStyle.sm,
+        ...TextStyle.bold,
+        ...BackgroundStyle.light,
         justifyContent: "flex-start",
-        flex: 1,
-        borderBottomWidth: 1,
-        borderColor: COLOR_LIGHT,
-
     },
     mainListItem: {
-        ...Padding.py3,
-        ...Margin.mx2,
-        borderBottomWidth: 1,
-        borderColor: COLOR_LIGHT
+        ...SpacingStyle.py3,
+        ...SpacingStyle.mx2,
+        ...BorderStyle.borderBottom,
+        ...BackgroundStyle.white,
     },
     indexList: {
-        ...Padding.py3,
+        ...SpacingStyle.py3,
         alignItems: "center",
     },
     index: {
         ...TextStyle.sm,
-        ...Padding.py1,
-        ...Padding.px1,
+        ...SpacingStyle.py1,
+        ...SpacingStyle.px1,
     }
 });
