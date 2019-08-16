@@ -11,11 +11,37 @@ export default class AtoZList extends React.Component {
     indexListRef = React.createRef();
     indexListOffsetY = 0;
     indexesOffsetY = [];
-    throttledTouchHandler = _.throttle(this.handleIndexListTouch.bind(this), 100, {
+    throttledTouchHandler = _.throttle(this.handleIndexListTouch.bind(this), 20, {
         leading: true,
         trailing: false
     });
 
+    // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
+    doPartition = memoize((indexes, data) => {
+        indexes = [
+            ...indexes,
+            "#"
+        ];
+        console.log("running");
+        const { onPartition } = this.props;
+        const partition = Array.from(Array(indexes.length), () => []);
+        data.forEach(d => {
+            // Use provided partition function to determine which session to put into. if return false or null, put into last
+            const key = onPartition(d);
+            if (isNaN(key) || key < 0 || key >= indexes.length) {
+                throw new Error("Invalid return value from onPartition function. Must return an integer between 0 and length of list keys - 1 or false")
+            }
+            if (key !== false && key !== null) {
+                partition[key].push(d);
+            } else {
+                partition[partition.length - 1].push(d)
+            }
+        });
+        return indexes.map((k, index) => ({
+            title: k,
+            data: partition[index]
+        }));
+    });
 
     state = {
         currKey: null
@@ -54,28 +80,9 @@ export default class AtoZList extends React.Component {
             onScrollToIndexFailed,
             ...rest
         } = this.props;
-        indexes = [
-            ...indexes,
-            "#"
-        ];
-        const partition = Array.from(Array(indexes.length), () => []);
-        data.forEach(d => {
-            // Use provided partition function to determine which session to put into. if return false or null, put into last
-            const key = onPartition(d);
-            if (isNaN(key) || key < 0 || key >= indexes.length) {
-                throw new Error("Invalid return value from onPartition function. Must return an integer between 0 and length of list keys - 1 or false")
-            }
-            if (key !== false && key !== null) {
-                partition[key].push(d);
-            } else {
-                partition[partition.length - 1].push(d)
-            }
-        });
 
-        const sections = indexes.map((k, index) => ({
-            title: k,
-            data: partition[index]
-        }));
+        const partition = this.doPartition(indexes, data);
+
         return (
             <View style={styles.container}>
                 {
@@ -100,7 +107,7 @@ export default class AtoZList extends React.Component {
                     renderSectionHeader={renderSectionHeader}
                     keyExtractor={keyExtractor}
                     onScrollToIndexFailed={onScrollToIndexFailed}
-                    sections={sections}
+                    sections={partition}
                 />
                 <View style={styles.indexList}
                       ref={this.indexListRef}
@@ -197,6 +204,6 @@ const styles = StyleSheet.create({
     index: {
         ...TextStyle.sm,
         ...SpacingStyle.py1,
-        ...SpacingStyle.px1,
+        ...SpacingStyle.px2,
     }
 });
