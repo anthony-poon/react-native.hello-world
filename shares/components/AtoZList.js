@@ -1,4 +1,5 @@
 import {StyleSheet, Text, View, SectionList} from "react-native";
+import {SearchBar} from "react-native-elements";
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
@@ -18,11 +19,6 @@ export default class AtoZList extends React.Component {
 
     // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
     doPartition = memoize((indexes, data) => {
-        indexes = [
-            ...indexes,
-            "#"
-        ];
-        console.log("running");
         const { onPartition } = this.props;
         const partition = Array.from(Array(indexes.length), () => []);
         data.forEach(d => {
@@ -43,8 +39,21 @@ export default class AtoZList extends React.Component {
         }));
     });
 
+    doFilter = memoize((query, data) => {
+        if (!!query) {
+            const { onFilter } = this.props;
+            return _.filter(data, d => {
+                return onFilter(query, d);
+            });
+        } else {
+            return data;
+        }
+
+    });
+
     state = {
-        currKey: null
+        currKey: null,
+        query: "",
     };
 
     handleIndexListTouch(evt) {
@@ -59,7 +68,7 @@ export default class AtoZList extends React.Component {
             }
         }
         this.setState({
-            currKey: index
+            currKey: index,
         });
         this.mainListRef.current.scrollToLocation({
             animated: false,
@@ -81,6 +90,7 @@ export default class AtoZList extends React.Component {
             ...rest
         } = this.props;
 
+        data = this.doFilter(this.state.query, data);
         const partition = this.doPartition(indexes, data);
 
         return (
@@ -97,60 +107,84 @@ export default class AtoZList extends React.Component {
                         </Toast>
                     )
                 }
-
-                <SectionList
-                    {...rest}
-                    ref={this.mainListRef}
-                    style={styles.mainList}
-                    stickySectionHeadersEnabled={true}
-                    renderItem={renderItem}
-                    renderSectionHeader={renderSectionHeader}
-                    keyExtractor={keyExtractor}
-                    onScrollToIndexFailed={onScrollToIndexFailed}
-                    sections={partition}
+                <SearchBar
+                    containerStyle={styles.searchBar}
+                    inputContainerStyle={styles.searchBarInput}
+                    searchIcon={styles.searchBarIcon}
+                    platform={"ios"}
+                    value={this.state.query}
+                    onChangeText={query => {
+                        this.setState({
+                            query: query
+                        });
+                    }}
+                    onClearText={query => {
+                        this.setState({
+                            query: query
+                        });
+                    }}
+                    placeholder='Type Here...'
+                    lightTheme={true}
                 />
-                <View style={styles.indexList}
-                      ref={this.indexListRef}
-                      onLayout={evt => {
-                          this.indexListRef.current.measure((fx, fy, width, height, px, py) => {
-                              this.indexListOffsetY = py;
-                          })
-                      }}
-                      onStartShouldSetResponder={evt =>  true}
-                      onMoveShouldSetResponder ={evt =>  true}
-                      onResponderGrant={(evt) => {
-                          evt.persist();
-                          this.throttledTouchHandler(evt);
-                      }}
-                      onResponderMove={(evt) => {
-                          evt.persist();
-                          this.throttledTouchHandler(evt);
-                      }}
-                      onResponderRelease={evt => {
-                          this.setState({
-                              currKey: null,
-                          })
-                      }}
-                >
-                    {
-                        indexes.map((key, index) => (
-                            <View key={index}
-                                  onLayout={evt => {
-                                      this.indexesOffsetY.push(evt.nativeEvent.layout.y)
-                                  }}
-                            >
-                                <Text style={styles.index}>{key}</Text>
-                            </View>
-                        ))
-                    }
+                <View style={styles.listWrapper}>
+                    <SectionList
+                        {...rest}
+                        ref={this.mainListRef}
+                        style={styles.mainList}
+                        stickySectionHeadersEnabled={true}
+                        renderItem={renderItem}
+                        renderSectionHeader={renderSectionHeader}
+                        keyExtractor={keyExtractor}
+                        onScrollToIndexFailed={onScrollToIndexFailed}
+                        sections={partition}
+                    />
+                    <View style={styles.indexList}
+                          ref={this.indexListRef}
+                          onLayout={evt => {
+                              this.indexListRef.current.measure((fx, fy, width, height, px, py) => {
+                                  this.indexListOffsetY = py;
+                              })
+                          }}
+                          onStartShouldSetResponder={evt =>  true}
+                          onMoveShouldSetResponder ={evt =>  true}
+                          onResponderGrant={(evt) => {
+                              evt.persist();
+                              this.throttledTouchHandler(evt);
+                          }}
+                          onResponderMove={(evt) => {
+                              evt.persist();
+                              this.throttledTouchHandler(evt);
+                          }}
+                          onResponderRelease={evt => {
+                              this.setState({
+                                  currKey: null,
+                              })
+                          }}
+                    >
+                        {
+                            indexes.map((key, index) => (
+                                <View key={index}
+                                      onLayout={evt => {
+                                          this.indexesOffsetY.push(evt.nativeEvent.layout.y)
+                                      }}
+                                >
+                                    <Text style={styles.index}>{key}</Text>
+                                </View>
+                            ))
+                        }
+                    </View>
                 </View>
+
             </View>
         );
     }
 }
 
 AtoZList.defaultProps = {
-    indexes: _.range(65, 91).map(ascii => String.fromCharCode(ascii)),
+    indexes: [
+        ..._.range(65, 91).map(ascii => String.fromCharCode(ascii)),
+        "#"
+    ],
     renderItem: ({item, index, section}) => (
         <View style={styles.mainListItem}>
             <Text key={index}>{item}</Text>
@@ -172,11 +206,23 @@ AtoZList.propTypes = {
     renderItem: PropTypes.func,
     renderSectionHeader: PropTypes.func,
     data: PropTypes.arrayOf(PropTypes.any).isRequired,
-    onPartition: PropTypes.func.isRequired
+    onPartition: PropTypes.func.isRequired,
+    onFilter: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
     container: {
+    },
+    searchBar: {
+        ...BackgroundStyle.white,
+    },
+    searchBarInput: {
+        ...BackgroundStyle.light
+    },
+    searchBarIcon: {
+        ...BackgroundStyle.light,
+    },
+    listWrapper: {
         flexDirection: "row"
     },
     mainList: {
@@ -198,12 +244,12 @@ const styles = StyleSheet.create({
         ...BackgroundStyle.white,
     },
     indexList: {
-        ...SpacingStyle.py3,
+        ...SpacingStyle.pt1,
         alignItems: "center",
     },
     index: {
         ...TextStyle.sm,
-        ...SpacingStyle.py1,
+        ...SpacingStyle.pb1,
         ...SpacingStyle.px2,
     }
 });

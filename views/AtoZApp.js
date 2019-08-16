@@ -32,6 +32,9 @@ export default class AtoZApp extends React.Component {
                             return false;
                         }
                     }}
+                    onFilter={(query, data) => {
+                        return data.toLowerCase().includes(query.toLowerCase())
+                    }}
                 />
             </View>
         );
