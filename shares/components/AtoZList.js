@@ -132,7 +132,13 @@ export default class AtoZList extends React.Component {
                         ref={this.mainListRef}
                         style={styles.mainList}
                         stickySectionHeadersEnabled={true}
-                        renderItem={renderItem}
+                        renderItem={({...args}) => {
+                            // Add query to default argument
+                            return renderItem({
+                                ...args,
+                                query: this.state.query
+                            })
+                        }}
                         renderSectionHeader={renderSectionHeader}
                         keyExtractor={keyExtractor}
                         onScrollToIndexFailed={onScrollToIndexFailed}
@@ -185,7 +191,7 @@ AtoZList.defaultProps = {
         ..._.range(65, 91).map(ascii => String.fromCharCode(ascii)),
         "#"
     ],
-    renderItem: ({item, index, section}) => (
+    renderItem: ({item, index, section, query}) => (
         <View style={styles.mainListItem}>
             <Text key={index}>{item}</Text>
         </View>
