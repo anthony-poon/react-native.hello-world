@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer'
 import {shallow} from "enzyme";
-import AtoZList from "../../../shares/components/AtoZList";
+import AtoZList from "../../../views/contact-list/components/AtoZList";
 import _ from "lodash";
 
 describe("<AtoZList/>", () => {

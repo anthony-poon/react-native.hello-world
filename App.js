@@ -1,17 +1,18 @@
 import React from 'react';
 import {View} from 'react-native';
-import AtoZApp from "./views/AtoZApp";
+import ContactListApp from "./views/contact-list/ContactListApp";
 import IndexApp from "./views/IndexApp"
 import FlexLab from "./views/FlexLab";
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigatorIcon from "./shares/components/NavigatorIcon";
+import DetailApp from "./views/contact-list/DetailApp";
 
-const homeStack = createStackNavigator({
+const HomeStack = createStackNavigator({
     Home: IndexApp,
 });
 
-homeStack.navigationOptions = {
+HomeStack.navigationOptions = {
     tabBarLabel: <View/>,
         tabBarIcon: ({focused}) => (
         <NavigatorIcon
@@ -22,11 +23,12 @@ homeStack.navigationOptions = {
     ),
 };
 
-const aToZStack = createStackNavigator({
-    AtoZApp: AtoZApp,
+const ContactListStack = createStackNavigator({
+    ContactList: ContactListApp,
+    Detail: DetailApp
 });
 
-aToZStack.navigationOptions = {
+ContactListStack.navigationOptions = {
     tabBarLabel: <View/>,
         tabBarIcon: ({focused}) => (
         <NavigatorIcon
@@ -37,11 +39,11 @@ aToZStack.navigationOptions = {
     ),
 };
 
-const flexLabStack = createStackNavigator({
+const FlexLabStack = createStackNavigator({
     FlexLab: FlexLab
 });
 
-flexLabStack.navigationOptions = {
+FlexLabStack.navigationOptions = {
     tabBarLabel: <View/>,
         tabBarIcon: ({focused}) => (
         <NavigatorIcon
@@ -53,9 +55,9 @@ flexLabStack.navigationOptions = {
 };
 
 const BottomTabNavigator = createBottomTabNavigator({
-    Home: homeStack,
-    AtoZApp: aToZStack,
-    FlexLab: flexLabStack
+    Home: HomeStack,
+    ContactList: ContactListStack,
+    FlexLab: FlexLabStack
 });
 
 export default createAppContainer(BottomTabNavigator);

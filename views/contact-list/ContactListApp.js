@@ -1,11 +1,13 @@
-import {View} from "react-native";
-import AtoZList from "../shares/components/AtoZList";
+import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
+import AtoZList from "./components/AtoZList";
 import React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 import {Container, Content} from "native-base"
-export default class AtoZApp extends React.Component {
+import {SpacingStyle, BorderStyle, BackgroundStyle} from "../../shares/styles"
+import avatar from "../../assets/images/empty-avatar.jpg";
+export default class ContactListApp extends React.Component {
     static navigationOptions = ({ navigation: { navigate } }) => ({
-        title: 'AtoZ App',
+        title: 'Contact List App',
     });
     state = {
         data: []
@@ -23,12 +25,23 @@ export default class AtoZApp extends React.Component {
     }
 
     render() {
+        const { navigation: { navigate } } = this.props;
         return (
             <Container>
                 <Content contentContainerStyle={{ height: "100%" }}>
                     <View style={{height: "100%"}}>
                         <AtoZList
                             data={this.state.data}
+                            renderItem={({item, index, section}) => (
+                                <TouchableHighlight style={styles.listItem} onPress={() => navigate('Detail', {
+                                    avatar: avatar,
+                                    name: "John Doe",
+                                    email: "john.doe@example.com",
+                                    mobile: "+ 852-2000 0000"
+                                })}>
+                                    <Text>{item}</Text>
+                                </TouchableHighlight>
+                            )}
                             onPartition={data => {
                                 const ascii = data.toUpperCase().charCodeAt(0);
                                 if (ascii >= 65 && ascii < 91) {
@@ -48,3 +61,12 @@ export default class AtoZApp extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    listItem: {
+        ...SpacingStyle.py3,
+        ...SpacingStyle.mx2,
+        ...BorderStyle.borderBottom,
+        ...BackgroundStyle.white,
+    }
+});

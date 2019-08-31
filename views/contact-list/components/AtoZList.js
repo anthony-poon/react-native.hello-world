@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View, SectionList, ScrollView} from "react-native";
+import {StyleSheet, Text, View, SectionList} from "react-native";
 import {SearchBar} from "react-native-elements";
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {TextStyle, SpacingStyle, BackgroundStyle, BorderStyle} from "../styles"
+import {TextStyle, SpacingStyle, BackgroundStyle, BorderStyle} from "../../../shares/styles"
 import memoize from "memoize-one";
 import Toast from 'react-native-root-toast';
 
@@ -78,9 +78,9 @@ export default class AtoZList extends React.Component {
         })
     }
 
-    renderItem({item, index, section}) {
-        return this.props.renderItem({item, index, section, query: this.state.query})
-    }
+    // renderItem({item, index, section}) {
+    //     return this.props.renderItem({item, index, section, query: this.state.query})
+    // }
 
     render() {
         const {
