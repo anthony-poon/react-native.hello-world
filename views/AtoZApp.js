@@ -4,6 +4,9 @@ import React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 import {Container, Content} from "native-base"
 export default class AtoZApp extends React.Component {
+    static navigationOptions = ({ navigation: { navigate } }) => ({
+        title: 'AtoZ App',
+    });
     state = {
         data: []
     };

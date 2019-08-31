@@ -7,52 +7,56 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigatorIcon from "./shares/components/NavigatorIcon";
 
+const homeStack = createStackNavigator({
+    Home: IndexApp,
+});
+
+homeStack.navigationOptions = {
+    tabBarLabel: <View/>,
+        tabBarIcon: ({focused}) => (
+        <NavigatorIcon
+            text={"Home"}
+            icon={"md-home"}
+            focused={focused}
+        />
+    ),
+};
+
+const aToZStack = createStackNavigator({
+    AtoZApp: AtoZApp,
+});
+
+aToZStack.navigationOptions = {
+    tabBarLabel: <View/>,
+        tabBarIcon: ({focused}) => (
+        <NavigatorIcon
+            text={"AtoZApp"}
+            icon={"md-book"}
+            focused={focused}
+        />
+    ),
+};
+
+const flexLabStack = createStackNavigator({
+    FlexLab: FlexLab
+});
+
+flexLabStack.navigationOptions = {
+    tabBarLabel: <View/>,
+        tabBarIcon: ({focused}) => (
+        <NavigatorIcon
+            text={"FlexLab"}
+            icon={"md-book"}
+            focused={focused}
+        />
+    ),
+};
 
 const BottomTabNavigator = createBottomTabNavigator({
-    Home: {
-        screen: IndexApp,
-        navigationOptions: {
-            tabBarLabel: <View/>,
-            tabBarIcon: ({focused}) => (
-                <NavigatorIcon
-                    text={"Home"}
-                    icon={"md-home"}
-                    focused={focused}
-                />
-            ),
-        }
-    },
-    AtoZApp: {
-        screen: AtoZApp,
-        navigationOptions: {
-            tabBarLabel: <View/>,
-            tabBarIcon: ({focused}) => (
-                <NavigatorIcon
-                    text={"AtoZApp"}
-                    icon={"md-book"}
-                    focused={focused}
-                />
-            ),
-        }
-    },
-    FlexLab: {
-        screen: FlexLab,
-        navigationOptions: {
-            tabBarLabel: <View/>,
-            tabBarIcon: ({focused}) => (
-                <NavigatorIcon
-                    text={"FlexLab"}
-                    icon={"md-book"}
-                    focused={focused}
-                />
-            ),
-        }
-    }
+    Home: homeStack,
+    AtoZApp: aToZStack,
+    FlexLab: flexLabStack
 });
 
-const MainNavigator = createStackNavigator({
-    BottomTabNavigator,
-});
-
-export default createAppContainer(MainNavigator);
+export default createAppContainer(BottomTabNavigator);
 

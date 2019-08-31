@@ -3,7 +3,11 @@ import React from "react";
 import {Container, Content, Grid, Left, Right} from "native-base"
 import _ from "lodash";
 export default class FlexLab extends React.Component{
-    _keyExtractor = (item, index) => item.index;
+    static navigationOptions = ({ navigation: { navigate } }) => ({
+        title: 'Flex Lab',
+    });
+
+    _keyExtractor = (item, index) => index;
 
     _renderItem = ({item}) => (
         <Text>{item}</Text>
