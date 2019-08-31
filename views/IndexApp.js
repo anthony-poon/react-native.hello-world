@@ -1,12 +1,17 @@
 import {View, Text, StyleSheet} from "react-native";
 import React from "react";
-
-export default class AtoZApp extends React.Component {
+import {Container, Content} from "native-base"
+export default class IndexApp extends React.Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Hello World</Text>
-            </View>
+            <Container>
+                <Content contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={styles.container}>
+                        <Text>Hello World</Text>
+                    </View>
+                </Content>
+            </Container>
+
         );
     }
 }

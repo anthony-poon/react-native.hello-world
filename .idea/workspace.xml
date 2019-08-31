@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e8cadbbe-d87b-4b33-8ed0-31ac7b6ae8bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shares/components/AtoZList.js" beforeDir="false" afterPath="$PROJECT_DIR$/shares/components/AtoZList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/AtoZApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/views/AtoZApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/IndexApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/views/IndexApp.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/__test__/shares/components/AtoZList.test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            <state relative-caret-position="255">
+              <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -42,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/AtoZApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="36" selection-end-column="22" />
+            <state relative-caret-position="285">
+              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -66,11 +71,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/shares/components/AtoZList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="195" column="31" lean-forward="true" selection-start-line="195" selection-start-column="31" selection-end-line="195" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#65#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="81" column="46" lean-forward="true" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/FlexLab.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="32" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -78,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="8" column="51" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="51" />
+            <state relative-caret-position="540">
+              <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -88,13 +99,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shares/styles/index.js">
+        <entry file="file://$PROJECT_DIR$/views/IndexApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="105">
+              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -113,15 +121,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
               <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shares/styles/text.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="48" column="8" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -148,7 +147,9 @@
       <find>listKey</find>
       <find>listItem</find>
       <find>const</find>
+      <find>mainList</find>
       <find>console.log</find>
+      <find>renderI</find>
     </findStrings>
     <replaceStrings>
       <replace>em</replace>
@@ -182,7 +183,6 @@
         <option value="$PROJECT_DIR$/__test__/shares/components/IndexApp.test.js" />
         <option value="$PROJECT_DIR$/shares/utils/time.js" />
         <option value="$PROJECT_DIR$/__test__/shares/utils/time.test.js" />
-        <option value="$PROJECT_DIR$/App.js" />
         <option value="$PROJECT_DIR$/__test__/shares/components/AtoZList.enzyme.test.js" />
         <option value="$PROJECT_DIR$/jest-setup.js" />
         <option value="$PROJECT_DIR$/shares/components/a-to-z-list/AtoZList.js" />
@@ -196,16 +196,19 @@
         <option value="$PROJECT_DIR$/shares/styles/border.js" />
         <option value="$PROJECT_DIR$/shares/styles/text.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/views/FlexboxLab.js" />
+        <option value="$PROJECT_DIR$/App.js" />
+        <option value="$PROJECT_DIR$/views/IndexApp.js" />
         <option value="$PROJECT_DIR$/views/AtoZApp.js" />
+        <option value="$PROJECT_DIR$/views/FlexLab.js" />
         <option value="$PROJECT_DIR$/shares/components/AtoZList.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-14" />
-    <option name="y" value="1" />
-    <option name="width" value="3267" />
-    <option name="height" value="1947" />
+    <option name="x" value="-9" />
+    <option name="width" value="2178" />
+    <option name="height" value="1299" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -269,12 +272,6 @@
             <path>
               <item name="hello-world" type="b2602c69:ProjectViewProjectNode" />
               <item name="hello-world" type="462c0819:PsiDirectoryNode" />
-              <item name="shares" type="462c0819:PsiDirectoryNode" />
-              <item name="styles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hello-world" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hello-world" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -332,7 +329,7 @@
       </scripts>
       <node-interpreter value="project" />
       <envs>
-        <env name="REACT_NATIVE_PACKAGER_HOSTNAME" value="192.168.1.196" />
+        <env name="REACT_NATIVE_PACKAGER_HOSTNAME" value="192.168.0.112" />
       </envs>
       <method v="2" />
     </configuration>
@@ -377,25 +374,27 @@
       <workItem from="1564390723171" duration="744000" />
       <workItem from="1565517808480" duration="22300000" />
       <workItem from="1565660681907" duration="36848000" />
-      <workItem from="1565872398735" duration="18776000" />
+      <workItem from="1565872398735" duration="33567000" />
+      <workItem from="1566731841781" duration="2533000" />
+      <workItem from="1567253671997" duration="784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79879000" />
+    <option name="totallyTimeSpent" value="97987000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20809716" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1902834" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32974428" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49928367" weight="0.5079929" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49928367" weight="0.5074024" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.39973083" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -453,13 +452,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shares/utils/time.js" />
     <entry file="file://$PROJECT_DIR$/__test__/shares/utils/time.test.js" />
-    <entry file="file://$PROJECT_DIR$/views/IndexApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__test__/shares/views/__snapshots__/IndexApp.test.js.snap">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -537,13 +529,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shares/styles/padding.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="6" lean-forward="true" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/shares/styles/padding.js" />
     <entry file="file://$PROJECT_DIR$/shares/styles/spacing.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1055">
@@ -575,6 +561,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/AtoZApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/shares/components/NavigatorIcon.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -582,6 +585,23 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/IndexApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -599,50 +619,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__test__/shares/components/AtoZList.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        <state relative-caret-position="255">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App.js">
+    <entry file="file://$PROJECT_DIR$/views/FlexLab.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" column="51" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/AtoZApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="36" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="32" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shares/components/AtoZList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="195" column="31" lean-forward="true" selection-start-line="195" selection-start-column="31" selection-end-line="195" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#65#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="176">
+          <caret line="81" column="46" lean-forward="true" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
         </state>
       </provider>
     </entry>
