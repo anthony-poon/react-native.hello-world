@@ -11,7 +11,6 @@ import EditContactApp from "./views/contact-list/EditContactApp";
 import {AppLoading} from "expo";
 import * as Font from 'expo-font'
 
-
 const HomeStack = createStackNavigator({
     Home: IndexApp,
 });
