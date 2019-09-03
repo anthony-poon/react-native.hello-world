@@ -1,6 +1,6 @@
-import {View, Text, StyleSheet} from "react-native";
+import {StyleSheet, Text} from "react-native";
 import React from "react";
-import {Container, Content} from "native-base"
+import {Button, Container, Content, View } from "native-base"
 export default class IndexApp extends React.Component {
     render() {
         return (

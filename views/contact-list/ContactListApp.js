@@ -1,10 +1,11 @@
-import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
+import {View, TouchableHighlight, Text, StyleSheet, TouchableOpacity} from "react-native";
 import AtoZList from "./components/AtoZList";
 import React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 import {Container, Content} from "native-base"
 import {SpacingStyle, BorderStyle, BackgroundStyle} from "../../shares/styles"
 import avatar from "../../assets/images/empty-avatar.jpg";
+
 export default class ContactListApp extends React.Component {
     static navigationOptions = ({ navigation: { navigate } }) => ({
         title: 'Contact List App',
@@ -33,14 +34,14 @@ export default class ContactListApp extends React.Component {
                         <AtoZList
                             data={this.state.data}
                             renderItem={({item, index, section}) => (
-                                <TouchableHighlight style={styles.listItem} onPress={() => navigate('Detail', {
+                                <TouchableOpacity style={styles.listItem} onPress={() => navigate('DisplayDetail', {
                                     avatar: avatar,
                                     name: "John Doe",
                                     email: "john.doe@example.com",
                                     mobile: "+ 852-2000 0000"
                                 })}>
                                     <Text>{item}</Text>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             )}
                             onPartition={data => {
                                 const ascii = data.toUpperCase().charCodeAt(0);

@@ -1,6 +1,9 @@
 import * as Color from "./var";
 
 const style = {
+    default: {
+        color: Color.COLOR_DEFAULT
+    },
     primary: {
         color: Color.COLOR_PRIMARY
     },

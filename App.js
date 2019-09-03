@@ -6,7 +6,11 @@ import FlexLab from "./views/FlexLab";
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import NavigatorIcon from "./shares/components/NavigatorIcon";
-import DetailApp from "./views/contact-list/DetailApp";
+import ViewContactApp from "./views/contact-list/ViewContactApp";
+import EditContactApp from "./views/contact-list/EditContactApp";
+import {AppLoading} from "expo";
+import * as Font from 'expo-font'
+
 
 const HomeStack = createStackNavigator({
     Home: IndexApp,
@@ -25,7 +29,8 @@ HomeStack.navigationOptions = {
 
 const ContactListStack = createStackNavigator({
     ContactList: ContactListApp,
-    Detail: DetailApp
+    DisplayDetail: ViewContactApp,
+    EditDetail: EditContactApp,
 });
 
 ContactListStack.navigationOptions = {
@@ -60,5 +65,35 @@ const BottomTabNavigator = createBottomTabNavigator({
     FlexLab: FlexLabStack
 });
 
-export default createAppContainer(BottomTabNavigator);
+const AppContainer = createAppContainer(BottomTabNavigator);
+
+export default class App extends React.Component {
+    state = {
+        loading: true
+    };
+
+    async componentWillMount() {
+        await Font.loadAsync({
+            Roboto: require("native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+        });
+        this.setState({ loading: false });
+    }
+
+    render() {
+        const {
+            loading
+        } = this.state;
+        if (loading) {
+            return (
+                <AppLoading/>
+            )
+        } else {
+            return (
+                <AppContainer/>
+            );
+        }
+
+    }
+}
 
