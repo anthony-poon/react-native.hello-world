@@ -1,15 +1,15 @@
 {
     "expo": {
-        "name": "Expo Hello World",
-        "slug": "hello-world",
+        "name": "Native Toolkit",
+        "slug": "native-toolkit",
         "privacy": "public",
         "sdkVersion": "33.0.0",
         "platforms": [
             "ios",
             "android",
-            "web"
         ],
-        "version": "1.0.0",
+        "description": "A collection of component and sample app built using React Native and Expo.",
+        "version": "1.0.1",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -27,9 +27,10 @@
             "supportsTablet": true,
         },
         "android": {
-            "package": "com.anthony_poon.hello_world"
+            "package": "com.anthony_poon.native_toolkit"
         }
     },
-    "slug": "hello-world",
-    "name": "Hello World"
+    "slug": "native-toolkit",
+    "name": "Native Toolkit",
+    "owner": "Anthony Poon"
 }
