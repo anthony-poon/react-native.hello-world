@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
 import ContactThumbnail from "./components/ContactThumbnail";
-import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../shares/styles";
+import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../../shares/styles";
 import DetailListItem from "./components/DetailListItem";
 import PropTypes from "prop-types";
 import { Icon } from 'react-native-elements'

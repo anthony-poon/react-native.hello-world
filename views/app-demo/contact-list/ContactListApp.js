@@ -3,12 +3,12 @@ import AtoZList from "./components/AtoZList";
 import React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 import {Container, Content} from "native-base"
-import {SpacingStyle, BorderStyle, BackgroundStyle} from "../../shares/styles"
-import avatar from "../../assets/images/empty-avatar.jpg";
+import {SpacingStyle, BorderStyle, BackgroundStyle} from "../../../shares/styles"
+import avatar from "../../../assets/images/empty-avatar.jpg";
 
 export default class ContactListApp extends React.Component {
     static navigationOptions = ({ navigation: { navigate } }) => ({
-        title: 'Contact List App',
+        title: 'Contact List',
     });
     state = {
         data: []

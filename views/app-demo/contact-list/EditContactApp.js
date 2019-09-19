@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {SpacingStyle} from "../../shares/styles";
+import {SpacingStyle} from "../../../shares/styles";
 import PropTypes from "prop-types";
-import avatarPlaceHolder from "../../assets/images/empty-avatar.jpg";
-import FormContainer from "../../shares/components/form/FormContainer";
+import avatarPlaceHolder from "../../../assets/images/empty-avatar.jpg";
+import FormContainer from "../../../shares/components/form/FormContainer";
 import {Container, Content, Form, Label, Input, Item, Text, Button} from "native-base";
-import FormGroup from "../../shares/components/form/FormGroup";
-import FormTouchable from "../../shares/components/form/FormTouchable";
+import FormGroup from "../../../shares/components/form/FormGroup";
+import FormTouchable from "../../../shares/components/form/FormTouchable";
 
 export default class EditContactApp extends React.Component {
     static navigationOptions = ({ navigation: { state: { params } } }) => {
@@ -67,23 +67,20 @@ export default class EditContactApp extends React.Component {
                                 </Item>
                                 <Item fixedLabel>
                                     <Label>Email</Label>
-                                    <Input value={email} onChangeText={name => this.setState({email})}/>
+                                    <Input value={email} onChangeText={email => this.setState({email})}/>
                                 </Item>
                                 <Item fixedLabel last>
                                     <Label>Mobile</Label>
-                                    <Input value={mobile} onChangeText={name => this.setState({mobile})}/>
+                                    <Input value={mobile} onChangeText={mobile => this.setState({mobile})}/>
                                 </Item>
                             </FormGroup>
                             <FormGroup>
-                                <Item last>
-                                    <FormTouchable title={"Delete"} type={"danger"}/>
-                                </Item>
+                                <FormTouchable last title={"Delete"} type={"danger"}/>
                             </FormGroup>
                         </Form>
                     </FormContainer>
                 </Content>
             </Container>
-
         );
     }
 }

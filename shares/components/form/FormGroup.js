@@ -1,6 +1,6 @@
 import React from "react";
-import {View, StyleSheet} from "react-native";
-import {BackgroundStyle, BorderStyle, SpacingStyle} from "../../styles";
+import {View, StyleSheet, Text} from "react-native";
+import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
 import PropTypes from "prop-types"
 
 export default class FormGroup extends React.Component {
@@ -8,9 +8,16 @@ export default class FormGroup extends React.Component {
         const { title, children } = this.props;
         return (
             <View style={styles.container}>
-                <View style={styles.header}>
-                    { title }
-                </View>
+
+                    {
+                        !!title ? (
+                            <Text style={styles.title}>{ title }</Text>
+                        ) : (
+                            <View style={styles.separator}>
+                                <Text>{ title }</Text>
+                            </View>
+                        )
+                    }
                 <View style={styles.content}>
                     { children }
                 </View>
@@ -27,13 +34,16 @@ const styles = StyleSheet.create({
     container: {
 
     },
-    header: {
-        ...BackgroundStyle.light,
-        ...SpacingStyle.px2,
+    title: {
+        ...TextStyle.secondary,
+        ...SpacingStyle.px3,
         ...SpacingStyle.py1
+    },
+    separator: {
+        ...SpacingStyle.mb1
     },
     content: {
         ...BackgroundStyle.white,
-        ...BorderStyle.shadow1
+        ...BorderStyle.shadow1,
     }
 });

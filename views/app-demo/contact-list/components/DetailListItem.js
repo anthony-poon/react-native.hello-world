@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import {MaterialIcons as Icon} from '@expo/vector-icons';
 import PropTypes from 'prop-types';
-import {SpacingStyle, BorderStyle, TextStyle} from "../../../shares/styles";
+import {SpacingStyle, BorderStyle, TextStyle} from "../../../../shares/styles";
 
 export default class DetailListItem extends React.Component{
     render() {

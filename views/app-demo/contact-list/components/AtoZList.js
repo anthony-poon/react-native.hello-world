@@ -3,7 +3,7 @@ import {SearchBar} from "react-native-elements";
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {TextStyle, SpacingStyle, BackgroundStyle, BorderStyle} from "../../../shares/styles"
+import {TextStyle, SpacingStyle, BackgroundStyle, BorderStyle} from "../../../../shares/styles"
 import memoize from "memoize-one";
 import Toast from 'react-native-root-toast';
 

@@ -44,7 +44,7 @@ const style = {
         fontSize: 16
     },
     lg: {
-        fontSize: 18
+        fontSize: 18,
     },
     xl: {
         fontSize: 24

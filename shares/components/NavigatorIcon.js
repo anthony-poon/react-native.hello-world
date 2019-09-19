@@ -1,8 +1,8 @@
 import React from "react";
 import {View, Text, StyleSheet} from "react-native"
 import PropTypes from "prop-types";
-import {Ionicons} from "@expo/vector-icons";
-import {TextStyle} from "../styles";
+import {FontAwesome as Icon} from "@expo/vector-icons";
+import {SpacingStyle, TextStyle} from "../styles";
 
 export default class NavigatorIcon extends React.Component {
     render() {
@@ -13,11 +13,11 @@ export default class NavigatorIcon extends React.Component {
         } = this.props;
         return (
             <View style={styles.iconWrapper}>
-                <Ionicons
+                <Icon
                     style={focused ? styles.iconFocused : styles.icon}
                     name={icon}
                 />
-                <Text style={focused ? styles.textFocused : styles.text}>{text}</Text>
+                <Text style={focused ? styles.textFocused : styles.text} numberOfLines={1}>{text}</Text>
             </View>
         );
     }
@@ -32,21 +32,22 @@ NavigatorIcon.propTypes = {
 const styles = StyleSheet.create({
     iconWrapper: {
         alignItems: "center",
-        justifyContent: "center"
     },
     icon: {
-        ...TextStyle.xl
+        ...TextStyle.xl,
+        ...TextStyle.muted,
     },
     iconFocused: {
         ...TextStyle.xl,
-        ...TextStyle.textPrimary
+        ...TextStyle.primary,
     },
     text :{
-        ...TextStyle.sm
+        ...TextStyle.sm,
+        ...TextStyle.muted,
     },
     textFocused :{
         ...TextStyle.sm,
-        ...TextStyle.textPrimary
+        ...TextStyle.primary,
     }
 
 });

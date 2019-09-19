@@ -8,7 +8,7 @@ import {
     Image,
     Text,
 } from 'react-native';
-import {TextStyle, SpacingStyle} from "../../../shares/styles";
+import {TextStyle, SpacingStyle} from "../../../../shares/styles";
 
 export default class ContactThumbnail extends React.Component {
     render() {

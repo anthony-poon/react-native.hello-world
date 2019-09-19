@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, ScrollView, SectionList} from "react-native";
 import React from "react";
 import {Container, Content, Grid, Left, Right} from "native-base"
 import _ from "lodash";
-export default class FlexLab extends React.Component{
+export default class FlexLabApp extends React.Component{
     static navigationOptions = ({ navigation: { navigate } }) => ({
         title: 'Flex Lab',
     });

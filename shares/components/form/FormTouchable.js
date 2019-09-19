@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types";
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
 import {SpacingStyle, TextStyle} from "../../styles";
+import FormItem from "./FormItem";
 
 export default class FormTouchable extends React.Component {
 
@@ -9,18 +10,22 @@ export default class FormTouchable extends React.Component {
         const {
             title,
             type,
+            last,
             ...rest
         } = this.props;
         return (
-            <TouchableOpacity {...rest} style={styles.container}>
-                <Text style={styles[type.toLowerCase()]}>{title}</Text>
-            </TouchableOpacity>
+            <FormItem last={last}>
+                <TouchableOpacity {...rest} style={styles.container}>
+                    <Text style={styles[type.toLowerCase()]}>{title}</Text>
+                </TouchableOpacity>
+            </FormItem>
         );
     }
 }
 
 FormTouchable.defaultProps = {
-    type: "default"
+    type: "default",
+    last: false
 };
 
 FormTouchable.propTypes = {
@@ -32,7 +37,8 @@ FormTouchable.propTypes = {
         "info",
         "danger"
     ]),
-    onPress: PropTypes.func
+    onPress: PropTypes.func,
+    last: PropTypes.bool
 };
 
 const styles = StyleSheet.create({
