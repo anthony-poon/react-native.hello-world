@@ -18,37 +18,35 @@ export default class FormToggle extends React.Component {
         const {
             value,
             disabled,
-            useDefaultColor
+            useThemedColor
         } = this.props;
-        if (!!useDefaultColor) {
-            return {};
-        }
-        if (Platform.OS === "ios") {
-            if (!!value) {
-                return {
-                    trackColor: {
-                        true: Color.COLOR_PRIMARY_TINT_1
-                    },
-                    thumbColor: Color.COLOR_WHITE
-                };
-            } else {
-                // use default color if false
-                return {};
-            }
+        if (!!useThemedColor) {
+            if (Platform.OS === "ios") {
+                if (!!value) {
+                    return {
+                        trackColor: {
+                            true: Color.COLOR_PRIMARY_TINT_1
+                        },
+                    };
+                } else {
+                    // use default color if false
+                    return {};
+                }
 
-        } else {
-            if (!disabled) {
-                return {
-                    trackColor: {
-                        true: Color.COLOR_PRIMARY_TINT_2
-                    },
-                    // null is default
-                    thumbColor: !!value ? Color.COLOR_PRIMARY : null
-                };
             } else {
-                return {};
-            }
+                if (!disabled) {
+                    return {
+                        trackColor: {
+                            true: Color.COLOR_PRIMARY_TINT_2
+                        },
+                        // null is default
+                        thumbColor: !!value ? Color.COLOR_PRIMARY : null
+                    };
+                } else {
+                    return {};
+                }
 
+            }
         }
     }
 
@@ -112,7 +110,7 @@ FormToggle.defaultProps = {
     last: false,
     indent: false,
     subLabel: "",
-    useDefaultColor: false,
+    useThemedColor: false,
     disabled: false
 };
 
@@ -124,7 +122,7 @@ FormToggle.propTypes = {
     last: PropTypes.bool,
     indent: PropTypes.bool,
     disabled: PropTypes.bool,
-    useDefaultColor: PropTypes.bool,
+    useThemedColor: PropTypes.bool,
     onValueChange: PropTypes.func.isRequired
 };
 

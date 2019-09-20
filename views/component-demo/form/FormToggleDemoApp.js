@@ -48,9 +48,9 @@ export default class FormToggleDemoApp extends React.Component {
                                 } value={value3} onValueChange={value3 => this.setState({value3})}/>
                                 <FormToggle last label={"Disabled"} value={value4} disabled={true} onValueChange={value4 => this.setState({value4})}/>
                             </FormGroup>
-                            <FormGroup title={"Default color"}>
-                                <FormToggle label={"Default Color"} value={value5} useDefaultColor={true} onValueChange={value5 => this.setState({value5})}/>
-                                <FormToggle last label={"Disabled"} value={value6} disabled={true} useDefaultColor={true} onValueChange={value6 => this.setState({value6})}/>
+                            <FormGroup title={"Themed color"}>
+                                <FormToggle label={"Themed Color"} value={value5} subLabel={"Can use themed color, but might not be a good idea if the theme color is red, grey or etc."} useThemedColor={true} onValueChange={value5 => this.setState({value5})}/>
+                                <FormToggle last label={"Disabled"} value={value6} disabled={true} useThemedColor={true} onValueChange={value6 => this.setState({value6})}/>
                             </FormGroup>
                             <FormGroup title={"Iconable"}>
                                 <FormToggle icon={"facebook"} label={"Base"} value={value7} onValueChange={value7 => this.setState({value7})}/>
