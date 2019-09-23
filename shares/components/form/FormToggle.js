@@ -1,12 +1,11 @@
 import React from "react"
-import {StyleSheet, Platform, TouchableOpacity} from "react-native"
-import FormItem from "./FormItem";
+import {StyleSheet, Platform} from "react-native"
 import {Text, Switch, View} from "react-native";
 import PropTypes from "prop-types";
-import FormTextInput from "./FormTextInput";
 import {SpacingStyle, TextStyle} from "../../styles";
 import * as Color from "../../styles/var";
 import {FontAwesome as Icon} from "@expo/vector-icons";
+import ListItem from "../list/ListItem";
 
 
 export default class FormToggle extends React.Component {
@@ -63,7 +62,7 @@ export default class FormToggle extends React.Component {
             ...rest
         } = this.props;
         return (
-            <FormItem last={last}>
+            <ListItem last={last}>
                 <View style={styles.container}>
                     <View style={styles.innerContainer}>
                         {
@@ -100,7 +99,7 @@ export default class FormToggle extends React.Component {
                         {...this.resolveColor()}
                     />
                 </View>
-            </FormItem>
+            </ListItem>
         );
     }
 }
@@ -128,7 +127,6 @@ FormToggle.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...SpacingStyle.py3,
         flexDirection: "row",
         flexGrow: 1,
         alignItems: "center",
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
         ...TextStyle.muted,
     },
     switch: {
-        ...SpacingStyle.mr3,
+        ...SpacingStyle.ml2,
     }
 
 });

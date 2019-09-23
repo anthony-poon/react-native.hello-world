@@ -2,8 +2,7 @@ import React from "react"
 import PropTypes from "prop-types";
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
 import {SpacingStyle, TextStyle} from "../../styles";
-import FormItem from "./FormItem";
-
+import ListItem from "../list/ListItem";
 export default class FormTouchable extends React.Component {
 
     render() {
@@ -14,11 +13,11 @@ export default class FormTouchable extends React.Component {
             ...rest
         } = this.props;
         return (
-            <FormItem last={last}>
+            <ListItem last={last}>
                 <TouchableOpacity {...rest} style={styles.container}>
                     <Text style={styles[type.toLowerCase()]}>{title}</Text>
                 </TouchableOpacity>
-            </FormItem>
+            </ListItem>
         );
     }
 }

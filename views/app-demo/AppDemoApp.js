@@ -1,7 +1,7 @@
 import React from "react";
 import {Container, Content} from "native-base";
 import FormContainer from "../../shares/components/form/FormContainer";
-import FormGroup from "../../shares/components/form/FormGroup";
+import ListGroup from "../../shares/components/list/ListGroup";
 import FormRedirection from "../../shares/components/form/FormRedirection";
 import {StyleSheet} from "react-native";
 
@@ -17,14 +17,14 @@ export default class AppDemoApp extends React.Component{
             <Container>
                 <Content contentContainerStyle={styles.container}>
                     <FormContainer>
-                        <FormGroup>
+                        <ListGroup>
                             <FormRedirection label={"Contact List"} subLabel={"Simulating a contact list"} onPress={() => {
                                 navigation.navigate('ContactList');
                             }}/>
-                            <FormRedirection label={"Place holder"} onPress={() => {}}/>
-                            <FormRedirection label={"Place holder"} onPress={() => {}}/>
-                            <FormRedirection last label={"Place holder"} onPress={() => {}}/>
-                        </FormGroup>
+                            <FormRedirection label={"Notification"} subLabel={"Simulating a notification list"} onPress={() => {
+                                navigation.navigate('Notification');
+                            }}/>
+                        </ListGroup>
                     </FormContainer>
                 </Content>
             </Container>

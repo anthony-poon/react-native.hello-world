@@ -1,12 +1,12 @@
 import React from "react"
 import {StyleSheet, TouchableOpacity, View, TextInput} from "react-native"
 import PropTypes from "prop-types";
-import FormItem from "./FormItem";
 import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
 import Modal from "react-native-modal"
 import {Button, Text} from "native-base";
 import TextButton from "../button/TextButton";
 import {FontAwesome as Icon} from "@expo/vector-icons";
+import ListItem from "../list/ListItem";
 
 export default class FormTextInput extends React.Component {
     state = {
@@ -78,11 +78,11 @@ export default class FormTextInput extends React.Component {
         const editable = !disabled && !!onChange;
         return (
             <>
-                <FormItem last={last}>
+                <ListItem last={last}>
                     <TouchableOpacity {...rest} style={styles.container} disabled={!editable} onPress={this.handleModalOpen.bind(this)}>
                         {
                             !!icon && (
-                                <View style={styles.lhsIconWrapper}>
+                                <View style={styles.lhs}>
                                     <Icon size={16} name={icon}/>
                                 </View>
 
@@ -109,7 +109,7 @@ export default class FormTextInput extends React.Component {
                                 <Icon
                                     name={"edit"}
                                     size={16}
-                                    style={styles.rhsIcon}
+                                    style={styles.rhs}
                                 />
                             )
                         }
@@ -140,7 +140,7 @@ export default class FormTextInput extends React.Component {
                             </View>
                         </View>
                     </Modal>
-                </FormItem>
+                </ListItem>
             </>
         );
     }
@@ -169,12 +169,11 @@ FormTextInput.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...SpacingStyle.py3,
         flexDirection: "row",
         flexGrow: 1,
         alignItems: "center",
     },
-    lhsIconWrapper: {
+    lhs: {
         ...SpacingStyle.mr3,
         ...SpacingStyle.mt1,
         alignSelf: "flex-start",
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
         ...TextStyle.secondary,
         flexShrink: 1
     },
-    rhsIcon: {
+    rhs: {
         ...TextStyle.secondary,
         ...SpacingStyle.mr3,
     },

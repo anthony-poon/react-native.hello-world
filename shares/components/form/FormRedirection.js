@@ -1,10 +1,10 @@
 import React from "react"
 import {StyleSheet, TouchableOpacity, View} from "react-native"
 import PropTypes from "prop-types";
-import FormItem from "./FormItem";
 import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
 import {Button, Text} from "native-base";
 import {FontAwesome as Icon} from "@expo/vector-icons";
+import ListItem from "../list/ListItem";
 
 export default class FormRedirection extends React.Component {
     render() {
@@ -19,11 +19,11 @@ export default class FormRedirection extends React.Component {
         } = this.props;
         return (
             <>
-                <FormItem last={last}>
+                <ListItem last={last}>
                     <TouchableOpacity {...rest} style={styles.container} onPress={onPress}>
                         {
                             !!icon && (
-                                <View style={styles.lhsIconWrapper}>
+                                <View style={styles.lhs}>
                                     <Icon size={16} name={icon}/>
                                 </View>
 
@@ -45,10 +45,10 @@ export default class FormRedirection extends React.Component {
                         <Icon
                             name={"angle-right"}
                             size={16}
-                            style={styles.rhsIcon}
+                            style={styles.rhs}
                         />
                     </TouchableOpacity>
-                </FormItem>
+                </ListItem>
             </>
         );
     }
@@ -72,12 +72,11 @@ FormRedirection.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...SpacingStyle.py3,
         flexDirection: "row",
         flexGrow: 1,
         alignItems: "center",
     },
-    lhsIconWrapper: {
+    lhs: {
         ...SpacingStyle.mr3,
         ...SpacingStyle.mt1,
         alignSelf: "flex-start",
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
         ...TextStyle.secondary,
         flexShrink: 1
     },
-    rhsIcon: {
+    rhs: {
         ...TextStyle.muted,
         ...SpacingStyle.mr3,
     },

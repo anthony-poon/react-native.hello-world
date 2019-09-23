@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import avatarPlaceHolder from "../../../assets/images/empty-avatar.jpg";
 import FormContainer from "../../../shares/components/form/FormContainer";
 import {Container, Content, Form, Label, Input, Item, Text, Button} from "native-base";
-import FormGroup from "../../../shares/components/form/FormGroup";
+import ListGroup from "../../../shares/components/list/ListGroup";
 import FormTouchable from "../../../shares/components/form/FormTouchable";
 
 export default class EditContactApp extends React.Component {
@@ -50,7 +50,7 @@ export default class EditContactApp extends React.Component {
                 <Content contentContainerStyle={styles.container}>
                     <FormContainer>
                         <Form>
-                            <FormGroup>
+                            <ListGroup>
                                 <View style={styles.avatarWrapper}>
                                     <TouchableOpacity disabled={true} style={styles.avatar}>
                                         <Image
@@ -59,8 +59,8 @@ export default class EditContactApp extends React.Component {
                                         />
                                     </TouchableOpacity>
                                 </View>
-                            </FormGroup>
-                            <FormGroup>
+                            </ListGroup>
+                            <ListGroup>
                                 <Item fixedLabel>
                                     <Label>Name</Label>
                                     <Input value={name} onChangeText={name => this.setState({name})}/>
@@ -73,10 +73,10 @@ export default class EditContactApp extends React.Component {
                                     <Label>Mobile</Label>
                                     <Input value={mobile} onChangeText={mobile => this.setState({mobile})}/>
                                 </Item>
-                            </FormGroup>
-                            <FormGroup>
+                            </ListGroup>
+                            <ListGroup>
                                 <FormTouchable last title={"Delete"} type={"danger"}/>
-                            </FormGroup>
+                            </ListGroup>
                         </Form>
                     </FormContainer>
                 </Content>

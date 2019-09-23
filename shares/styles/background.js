@@ -4,6 +4,18 @@ const style = {
     primary: {
         backgroundColor: Color.COLOR_PRIMARY
     },
+    primaryTint1: {
+        backgroundColor: Color.COLOR_PRIMARY_TINT_1
+    },
+    primaryTint2: {
+        backgroundColor: Color.COLOR_PRIMARY_TINT_2
+    },
+    primaryShade1: {
+        backgroundColor: Color.COLOR_PRIMARY_SHADE_1
+    },
+    primaryShade2: {
+        backgroundColor: Color.COLOR_PRIMARY_SHADE_2
+    },
     secondary: {
         backgroundColor: Color.COLOR_SECONDARY
     },
