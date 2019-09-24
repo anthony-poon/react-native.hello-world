@@ -29,7 +29,9 @@ export default class ComponentDemoApp extends React.Component {
                             <FormRedirection label={"Toggle"} subLabel={"Input component for boolean value"} onPress={() => {
                                 navigation.navigate('FormToggleDemo');
                             }}/>
-                            <FormRedirection label={"Place holder"} onPress={() => {}}/>
+                            <FormRedirection label={"Picker"} subLabel={"Picker component for options"} onPress={() => {
+                                navigation.navigate('FormPickerDemo');
+                            }}/>
                             <FormRedirection last label={"Place holder"} onPress={() => {}}/>
                         </ListGroup>
                     </FormContainer>

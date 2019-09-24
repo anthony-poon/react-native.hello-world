@@ -7,20 +7,18 @@ import FormContainer from "../../../shares/components/form/FormContainer";
 import {Container, Content, Form, Label, Input, Item, Text, Button} from "native-base";
 import ListGroup from "../../../shares/components/list/ListGroup";
 import FormTouchable from "../../../shares/components/form/FormTouchable";
+import TextButton from "../../../shares/components/button/TextButton";
 
 export default class EditContactApp extends React.Component {
     static navigationOptions = ({ navigation: { state: { params } } }) => {
         return {
             title: "Edit",
             headerRight: (
-                <Button
-                    transparent
+                <TextButton
                     onPress={() => console.log("abc")}
                 >
-                    <TouchableOpacity>
-                        <Text>Save</Text>
-                    </TouchableOpacity>
-                </Button>
+                    Save
+                </TextButton>
             )
         };
     };
