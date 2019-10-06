@@ -1,20 +1,33 @@
 import React from "react"
 import PropTypes from "prop-types";
-import {TextInput, View, StyleSheet, Picker} from "react-native";
+import {View, StyleSheet, ScrollView, TouchableOpacity, FlatList, TextInput} from "react-native";
 import FormRedirection from "./FormRedirection";
 import {Text} from "native-base";
 import Modal from "react-native-modal";
-import {BackgroundStyle, SpacingStyle, TextStyle} from "../../styles";
+import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
 import _ from "lodash";
+import ListItem from "../list/ListItem";
+import TextButton from "../button/TextButton";
+import {Ionicons as Icon} from "@expo/vector-icons";
+import { SearchBar } from 'react-native-elements';
 
 export default class FormPicker extends React.Component {
     state = {
         isModalVisible: false,
+        searchValue: ""
     };
 
     handleModalOpen() {
+        // TODO: Scroll to selected item on open?
         this.setState({
+            searchValue: "",
             isModalVisible: true
+        })
+    }
+
+    handleModalClose() {
+        this.setState({
+            isModalVisible: false
         })
     }
 
@@ -29,49 +42,97 @@ export default class FormPicker extends React.Component {
         })
     }
 
+    toFlatListData(options) {
+        const rtn = [];
+        const {
+            searchValue
+        } = this.state;
+        options.forEach((option, index) => {
+            const label = _.isPlainObject(option) ? option.label : option;
+            const value = _.isPlainObject(option) ? option.value : option;
+            if (!searchValue || label.toLowerCase().includes(searchValue.toLowerCase())) {
+                rtn.push({
+                    label,
+                    value,
+                    key: index
+                });
+            }
+        });
+        return rtn;
+    }
+
+    renderModalContent({item, index, separators}) {
+        const {
+            value,
+        } = this.props;
+        const isChecked = item.value === value;
+        return (
+            <ListItem>
+                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleValueChange(item.value)}>
+                    <Text>{item.label}</Text>
+                    {
+                        <Icon style={isChecked ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={isChecked ? "md-radio-button-on" : "md-radio-button-off"}/>
+                    }
+                </TouchableOpacity>
+            </ListItem>
+        )
+    }
+
     render() {
         const {
+            last,
             label,
             value,
-            options
+            options,
+            search,
+            placeholder
         } = this.props;
         const {
-            isModalVisible
+            isModalVisible,
+            searchValue
         } = this.state;
+        const formattedOptions = this.toFlatListData(options);
+        const selection = _.find(formattedOptions, {value: value});
         // Pick first and check if is object. If true return the options.label
-        const subLabel = _.isPlainObject(options[0]) ? _.find(options, {value: value}).label : value;
+        const subLabel = !selection ? placeholder : selection.label;
         return (
             <>
                 <FormRedirection
+                    last={last}
                     label={label}
                     subLabel={`${subLabel}`}
                     onPress={() => this.handleModalOpen()}
                 />
                 <Modal
                     isVisible={isModalVisible}
-                    onBackdropPress={() => this.setState({ isModalVisible: false })}
+                    onBackdropPress={() => this.handleModalClose()}
                 >
                     <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalLabel}>{label}:</Text>
-                            <Picker
-                                selectedValue={value}
-                                onValueChange={value => this.handleValueChange(value)}
-                            >
+                        <ListItem>
+                            <View style={styles.modalHeader}>
+                                <Text style={styles.modalLabel}>{label}</Text>
                                 {
-                                    options.map((option, index) => {
-                                        if (_.isPlainObject(option)) {
-                                            return (
-                                                <Picker.Item label={option.label} value={option.value} key={index}/>
-                                            )
-                                        } else {
-                                            return (
-                                                <Picker.Item label={`${option}`} value={option} key={index}/>
-                                            )
-                                        }
-                                    })
+                                    !!search && (
+                                        <SearchBar
+                                            lightTheme={true}
+                                            containerStyle={styles.searchContainer}
+                                            inputContainerStyle={styles.searchInput}
+                                            onChangeText={searchValue => this.setState({searchValue})}
+                                            value={searchValue}
+                                        />
+                                    )
                                 }
-                            </Picker>
+                            </View>
+                        </ListItem>
+                        <FlatList
+                            data={formattedOptions}
+                            renderItem={args => this.renderModalContent(args)}
+                            keyExtractor={(item, index) => `${index}`}
+                        />
+                        <View style={styles.modalFooter}>
+                            <TextButton type={"primary"} onPress={() => this.handleModalClose()}>
+                                Cancel
+                            </TextButton>
                         </View>
                     </View>
                 </Modal>
@@ -81,11 +142,17 @@ export default class FormPicker extends React.Component {
 }
 
 FormPicker.defaultProps = {
-    value: ""
+    last: false,
+    value: "",
+    placeholder: "Please select one",
+    search: false
 };
 
 FormPicker.propTypes = {
+    last: PropTypes.bool,
     label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    search: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     options: PropTypes.arrayOf(PropTypes.oneOfType([
         // Options can be just value or object with label and value
@@ -102,15 +169,54 @@ FormPicker.propTypes = {
 const styles = StyleSheet.create({
     modalContainer: {
         ...BackgroundStyle.white,
-        ...SpacingStyle.pt4,
-        ...SpacingStyle.pb3,
-        ...SpacingStyle.px2
+        ...SpacingStyle.my5
     },
     modalContent: {
         ...SpacingStyle.px3
     },
+    modalHeader: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    searchContainer: {
+        ...SpacingStyle.ml3,
+        ...SpacingStyle.px0,
+        ...SpacingStyle.py0,
+        ...BackgroundStyle.light,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        borderRadius: 25,
+        flexGrow: 1,
+    },
+    searchInput: {
+        ...BackgroundStyle.light,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        borderRadius: 15,
+    },
+    filter: {
+        flexShrink: 1,
+        borderColor: "red",
+        borderWidth: 1
+    },
+    modalFooter: {
+        ...SpacingStyle.px2,
+        ...SpacingStyle.py2,
+    },
     modalLabel: {
-        ...TextStyle.sm,
         ...TextStyle.secondary,
+    },
+    optionItemContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    optionItemIconChecked: {
+        ...TextStyle.primary,
+        ...TextStyle.lg
+    },
+    optionItemIconUnchecked: {
+        ...TextStyle.secondary,
+        ...TextStyle.lg
     }
 });
