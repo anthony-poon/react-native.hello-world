@@ -4,6 +4,7 @@ import {Text, View, StyleSheet, TouchableOpacity, Vibration} from "react-native"
 import {BackgroundStyle, SpacingStyle, TextStyle} from "../../../../shares/styles";
 import PropTypes from "prop-types";
 import {Ionicons as Icon} from "@expo/vector-icons";
+
 export default class NotificationItem extends React.Component {
     handlePress(evt) {
         const {

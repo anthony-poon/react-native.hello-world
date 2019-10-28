@@ -2,7 +2,6 @@ import React from "react"
 import {StyleSheet, View, TouchableOpacity} from "react-native";
 import PropTypes from "prop-types";
 import TextButton from "../../../../shares/components/button/TextButton";
-import {Ionicons as Icon} from "@expo/vector-icons";
 import {BackgroundStyle, SpacingStyle, TextStyle} from "../../../../shares/styles";
 
 export default class MultiSelectBar extends React.Component {
