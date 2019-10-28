@@ -2,10 +2,10 @@ import React from "react"
 import {StyleSheet, View} from 'react-native';
 import {Container, Content} from "native-base";
 import {LoremIpsum} from "lorem-ipsum";
-import NotificationItem from "./component/NotificationItem";
+import NotificationItem from "./components/NotificationItem";
 import moment from "moment";
 import _ from "lodash";
-import MultiSelectBar from "./component/MultiSelectBar";
+import MultiSelectBar from "./components/MultiSelectBar";
 
 export default class NotificationApp extends React.Component{
     static navigationOptions = ({ navigation: { state: { params } } }) => {
