@@ -5,11 +5,10 @@
         "privacy": "public",
         "sdkVersion": "33.0.0",
         "platforms": [
-            "ios",
-            "android",
+            "android"
         ],
         "description": "A collection of component and sample app built using React Native and Expo.",
-        "version": "1.0.1",
+        "version": "1.0.3",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -24,13 +23,27 @@
             "**/*"
         ],
         "ios": {
-            "supportsTablet": true,
+            "supportsTablet": true
         },
         "android": {
-            "package": "com.anthony_poon.native_toolkit"
-        }
+            "package": "com.anthony_poon.native_toolkit",
+            "versionCode": 3
+        },
+        "hooks": {
+            "postPublish": [
+                {
+                    "file": "sentry-expo/upload-sourcemaps",
+                    "config": {
+                        "organization": "anthony-poon",
+                        "project": "hello-world",
+                        "authToken": "f5bb4311e002483ca6c98830f4d9d252b2c9696e2ed744ac88069871ce2d7c11"
+                    }
+                }
+            ]
+        },
+        "scheme": "apoon"
     },
     "slug": "native-toolkit",
     "name": "Native Toolkit",
-    "owner": "Anthony Poon"
+    "owner": "Anthony Poon",
 }

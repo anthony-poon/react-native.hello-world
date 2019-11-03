@@ -3,8 +3,22 @@ import {createAppContainer} from 'react-navigation';
 import {AppLoading} from "expo";
 import * as Font from 'expo-font'
 import BottomTabNavigator from "./navigation"
+import Constants from 'expo-constants';
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import * as Sentry from 'sentry-expo';
+import reducer from "./redux/reducers";
+
+Sentry.init({
+    dsn: 'https://ada00e88c52b4acc893a639d70c600ee@sentry.io/1800004',
+    debug: true
+});
+
+Sentry.setRelease(Constants.manifest.revisionId);
 
 const AppContainer = createAppContainer(BottomTabNavigator);
+
+const store = createStore(reducer);
 
 export default class App extends React.Component {
     state = {
@@ -23,16 +37,17 @@ export default class App extends React.Component {
         const {
             loading
         } = this.state;
-        if (loading) {
-            return (
-                <AppLoading/>
-            )
-        } else {
-            return (
-                <AppContainer/>
-            );
-        }
-
+        return (
+            <Provider store={store}>
+                {
+                    loading ? (
+                        <AppLoading/>
+                    ) : (
+                        <AppContainer/>
+                    )
+                }
+            </Provider>
+        )
     }
 }
 
