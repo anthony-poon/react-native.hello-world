@@ -5,9 +5,8 @@ import * as Font from 'expo-font'
 import BottomTabNavigator from "./navigation"
 import Constants from 'expo-constants';
 import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
 import * as Sentry from 'sentry-expo';
-import reducer from "./redux/reducers";
+import {store} from "./redux/store";
 
 Sentry.init({
     dsn: 'https://ada00e88c52b4acc893a639d70c600ee@sentry.io/1800004',
@@ -17,8 +16,6 @@ Sentry.init({
 Sentry.setRelease(Constants.manifest.revisionId);
 
 const AppContainer = createAppContainer(BottomTabNavigator);
-
-const store = createStore(reducer);
 
 export default class App extends React.Component {
     state = {

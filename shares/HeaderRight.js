@@ -4,13 +4,12 @@ import {SpacingStyle, TextStyle} from "./styles";
 import {MaterialIcons as Icon} from "@expo/vector-icons";
 import {connect} from "react-redux";
 import {setCredential, unsetCredential} from "../redux/actions/auth";
-import {Authentication} from "./api";
+import {Authentication, HeartBeat} from "./api";
+
 class HeaderRight extends React.Component{
 
     async handleLogin() {
-        console.log("clicked");
         const response = await Authentication.login();
-        console.log(response);
         const {
             setCredential
         } = this.props;
@@ -28,6 +27,11 @@ class HeaderRight extends React.Component{
         unsetCredential();
     }
 
+    async handlePing() {
+        const json = await HeartBeat.ping();
+        Alert.alert("Result", JSON.stringify(json, null, 4));
+    }
+
     render() {
         const {
             isLoggedIn
@@ -36,16 +40,25 @@ class HeaderRight extends React.Component{
             <View style={styles.container}>
                 {
                     isLoggedIn ? (
-                        <TouchableOpacity onPress={() => this.handleLogout()}>
-                            <Icon name={"exit-to-app"} style={styles.account}/>
-                        </TouchableOpacity>
+                        <>
+                            <TouchableOpacity onPress={() => this.handlePing()}>
+                                <Icon name={"message"} style={styles.icon}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.handleLogout()}>
+                                <Icon name={"exit-to-app"} style={styles.icon}/>
+                            </TouchableOpacity>
+                        </>
                     ) : (
-                        <TouchableOpacity onPress={() => this.handleLogin()}>
-                            <Icon name={"account-circle"} style={styles.account}/>
-                        </TouchableOpacity>
+                        <>
+                            <TouchableOpacity onPress={() => this.handlePing()} disabled={true}>
+                                <Icon name={"message"} style={styles.icon}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.handleLogin()}>
+                                <Icon name={"account-circle"} style={styles.icon}/>
+                            </TouchableOpacity>
+                        </>
                     )
                 }
-
             </View>
         );
     }
@@ -57,9 +70,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flex: 1,
     },
-    account: {
+    icon: {
         ...TextStyle.xl,
-        ...SpacingStyle.px1,
+        ...SpacingStyle.px2,
         ...SpacingStyle.py3,
     }
 });
