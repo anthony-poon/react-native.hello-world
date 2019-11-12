@@ -32,7 +32,9 @@ export default class ComponentDemoApp extends React.Component {
                             <FormRedirection label={"Picker"} subLabel={"Picker component for options"} onPress={() => {
                                 navigation.navigate('FormPickerDemo');
                             }}/>
-                            <FormRedirection last label={"Place holder"} onPress={() => {}}/>
+                            <FormRedirection last label={"Multi Picker"} subLabel={"Picker which support multiple value"} onPress={() => {
+                                navigation.navigate('FormMultiPickerDemo')
+                            }}/>
                         </ListGroup>
                     </FormContainer>
                 </Content>

@@ -7,13 +7,15 @@ import FormTextInputDemoApp from "../views/component-demo/form/FormTextInputDemo
 import FormToggleDemoApp from "../views/component-demo/form/FormToggleDemoApp";
 import ListItemDemoApp from "../views/component-demo/list/ListItemDemoApp";
 import FormPickerDemoApp from "../views/component-demo/form/FormPickerDemoApp";
+import FormMultiPickerDemoApp from "../views/component-demo/form/FormMultiPickerDemoApp";
 
 const ComponentDemoStack = createStackNavigator({
     ComponentDemo: ComponentDemoApp,
     FormTextInputDemo: FormTextInputDemoApp,
     FormToggleDemo: FormToggleDemoApp,
     ListItemDemo: ListItemDemoApp,
-    FormPickerDemo: FormPickerDemoApp
+    FormPickerDemo: FormPickerDemoApp,
+    FormMultiPickerDemo: FormMultiPickerDemoApp
 });
 
 ComponentDemoStack.navigationOptions = {
