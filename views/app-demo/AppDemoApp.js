@@ -21,7 +21,7 @@ export default class AppDemoApp extends React.Component{
                             <FormRedirection label={"Contact List"} subLabel={"Simulating a contact list"} onPress={() => {
                                 navigation.navigate('ContactList');
                             }}/>
-                            <FormRedirection label={"Notification"} subLabel={"Simulating a notification list"} onPress={() => {
+                            <FormRedirection last label={"Notification"} subLabel={"Simulating a notification list"} onPress={() => {
                                 navigation.navigate('Notification');
                             }}/>
                         </ListGroup>

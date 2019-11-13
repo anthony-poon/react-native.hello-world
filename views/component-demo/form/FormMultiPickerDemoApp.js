@@ -8,7 +8,7 @@ import FormMultiPicker from "../../../shares/components/form/FormMultiPicker";
 
 export default class FormMultiPickerDemoApp extends React.Component {
     static navigationOptions = ({ navigation: { navigate } }) => ({
-        title: 'Picker Demo',
+        title: 'Multi Picker Demo',
     });
 
     state = {

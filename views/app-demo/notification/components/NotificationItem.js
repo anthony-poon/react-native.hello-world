@@ -118,6 +118,7 @@ NotificationItem.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
+        ...SpacingStyle.py3,
         flexDirection: "row"
     },
     unread: {
