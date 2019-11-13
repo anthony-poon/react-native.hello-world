@@ -8,7 +8,7 @@ import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../style
 import _ from "lodash";
 import ListItem from "../list/ListItem";
 import TextButton from "../button/TextButton";
-import {Ionicons as Icon} from "@expo/vector-icons";
+import {Feather as Icon} from "@expo/vector-icons";
 import { SearchBar } from 'react-native-elements';
 
 const MAX_SUBLABEL_LENGTH = 50;
@@ -89,7 +89,7 @@ export default class FormMultiPicker extends React.Component {
                 <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(index)}>
                     <Text>{item.label}</Text>
                     {
-                        <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
+                        <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "check-square" : "square"}/>
                     }
                 </TouchableOpacity>
             </ListItem>
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         ...SpacingStyle.px3
     },
     modalHeader: {
-        ...SpacingStyle.py2,
+        ...SpacingStyle.py1,
         flexDirection: "row",
         alignItems: "center"
     },
@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
     },
     modalLabel: {
         ...TextStyle.secondary,
+        ...SpacingStyle.py3
     },
     optionItemContainer: {
         ...SpacingStyle.py3,

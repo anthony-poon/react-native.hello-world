@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         ...SpacingStyle.px3
     },
     modalHeader: {
-        ...SpacingStyle.py2,
+        ...SpacingStyle.py1,
         flexDirection: "row",
         alignItems: "center"
     },
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
     },
     modalLabel: {
         ...TextStyle.secondary,
+        ...SpacingStyle.py3
     },
     optionItemContainer: {
         ...SpacingStyle.py3,
