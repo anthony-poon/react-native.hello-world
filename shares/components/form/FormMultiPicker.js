@@ -103,16 +103,17 @@ export default class FormMultiPicker extends React.Component {
             value: selections
         } = this.props;
         // option can be array int, string or obj
-        const filtered = _.filter(options, option => {
+        let subLabel = _.reduce(options, (collector, option, index) => {
             if (_.isPlainObject(option) && selections.includes(option.value)) {
-                return selections.includes(option.value);
+                collector.push(option.value);
             } else if (selections.includes(option)) {
-                return selections.includes(option);
+                collector.push(option);
             }
-        });
+            return collector
+        }, []);
         // Abbreviate it if too long
-        const subLabel = filtered.join(", ");
-        if (!filtered === undefined) {
+        subLabel = subLabel.join(", ");
+        if (subLabel === "") {
             return placeholder;
         } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
             return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
