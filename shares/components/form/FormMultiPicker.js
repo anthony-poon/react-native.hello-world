@@ -44,7 +44,20 @@ export default class FormMultiPicker extends React.Component {
         })
     }
 
-    handleModalClose() {
+    handleClearAll() {
+        const {
+            formattedOptions
+        } = this.state;
+        const copy = formattedOptions.map((option) => ({
+            ...option,
+            isSelected: false
+        }));
+        this.setState({
+            formattedOptions: copy
+        })
+    }
+
+    handleSubmit() {
         const {
             onValueChange
         } = this.props;
@@ -142,7 +155,7 @@ export default class FormMultiPicker extends React.Component {
                 />
                 <Modal
                     isVisible={isModalVisible}
-                    onBackdropPress={() => this.handleModalClose()}
+                    onBackdropPress={() => this.handleSubmit()}
                 >
                     <View style={styles.modalContainer}>
                         <ListItem>
@@ -167,8 +180,11 @@ export default class FormMultiPicker extends React.Component {
                             keyExtractor={(item, index) => `${index}`}
                         />
                         <View style={styles.modalFooter}>
-                            <TextButton type={"primary"} onPress={() => this.handleModalClose()}>
-                                Close
+                            <TextButton type={"primary"} onPress={() => this.handleClearAll()}>
+                                Clear All
+                            </TextButton>
+                            <TextButton type={"primary"} onPress={() => this.handleSubmit()}>
+                                Submit
                             </TextButton>
                         </View>
                     </View>
@@ -181,7 +197,7 @@ export default class FormMultiPicker extends React.Component {
 FormMultiPicker.defaultProps = {
     last: false,
     value: "",
-    placeholder: "Please select one",
+    placeholder: "Please select",
     search: false
 };
 
@@ -240,6 +256,8 @@ const styles = StyleSheet.create({
     modalFooter: {
         ...SpacingStyle.px2,
         ...SpacingStyle.py2,
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     modalLabel: {
         ...TextStyle.secondary,
