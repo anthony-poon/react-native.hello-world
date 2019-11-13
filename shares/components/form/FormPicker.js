@@ -32,7 +32,8 @@ export default class FormPicker extends React.Component {
                 label,
                 value,
                 key: index,
-                isSelected: selection === value
+                isSelected: selection === value,
+                isFiltered: false
             }
         });
         this.setState({
@@ -52,7 +53,8 @@ export default class FormPicker extends React.Component {
         this.setState({
             isModalVisible: false
         }, () => {
-            onValueChange(_.find(formattedOptions, option => option.isSelected).value);
+            const selectedOption = _.find(formattedOptions, option => option.isSelected);
+            onValueChange(!!selectedOption ? selectedOption.value : null);
         });
     }
 
@@ -69,16 +71,30 @@ export default class FormPicker extends React.Component {
         })
     }
 
+    handleSearchInput(searchValue) {
+        const {
+            formattedOptions
+        } = this.state;
+        const copy = formattedOptions.map((option, index) => ({
+            ...option,
+            isFiltered: !!searchValue && !option.label.toLowerCase().includes(searchValue.toLowerCase())
+        }));
+        this.setState({
+            formattedOptions: copy,
+            searchValue
+        })
+    }
+
     renderModalContent({item, index, separators}) {
         return (
-            <ListItem>
-                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(item.value)}>
+            !item.isFiltered && (<ListItem>
+                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(index)}>
                     <Text>{item.label}</Text>
                     {
                         <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
                     }
                 </TouchableOpacity>
-            </ListItem>
+            </ListItem>)
         )
     }
 
@@ -98,7 +114,7 @@ export default class FormPicker extends React.Component {
         });
         // Abbreviate it if too long
         const subLabel = _.isPlainObject(filtered) ? filtered.value : filtered;
-        if (!subLabel) {
+        if (filtered === undefined) {
             return placeholder;
         } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
             return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
@@ -140,7 +156,7 @@ export default class FormPicker extends React.Component {
                                             lightTheme={true}
                                             containerStyle={styles.searchContainer}
                                             inputContainerStyle={styles.searchInput}
-                                            onChangeText={searchValue => this.setState({searchValue})}
+                                            onChangeText={searchValue => this.handleSearchInput(searchValue)}
                                             value={searchValue}
                                         />
                                     )
