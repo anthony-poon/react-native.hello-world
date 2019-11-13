@@ -11,96 +11,119 @@ import TextButton from "../button/TextButton";
 import {Ionicons as Icon} from "@expo/vector-icons";
 import { SearchBar } from 'react-native-elements';
 
+const MAX_SUBLABEL_LENGTH = 50;
+
 export default class FormPicker extends React.Component {
     state = {
         isModalVisible: false,
-        searchValue: ""
+        searchValue: "",
+        formattedOptions: []
     };
 
     handleModalOpen() {
-        // TODO: Scroll to selected item on open?
+        const {
+            options,
+            value: selection
+        } = this.props;
+        const formattedOptions = options.map((option, index) => {
+            const label = _.isPlainObject(option) ? option.label : option;
+            const value = _.isPlainObject(option) ? option.value : option;
+            return {
+                label,
+                value,
+                key: index,
+                isSelected: selection === value
+            }
+        });
         this.setState({
             searchValue: "",
-            isModalVisible: true
+            isModalVisible: true,
+            formattedOptions
         })
     }
 
     handleModalClose() {
-        this.setState({
-            isModalVisible: false
-        })
-    }
-
-    handleValueChange(value) {
         const {
             onValueChange
         } = this.props;
+        const {
+            formattedOptions
+        } = this.state;
         this.setState({
             isModalVisible: false
         }, () => {
-            onValueChange(value)
+            onValueChange(_.find(formattedOptions, option => option.isSelected).value);
+        });
+    }
+
+    handleToggle(toggleIndex) {
+        const {
+            formattedOptions
+        } = this.state;
+        const copy = formattedOptions.map((option, index) => ({
+            ...option,
+            isSelected: toggleIndex === index
+        }));
+        this.setState({
+            formattedOptions: copy
         })
     }
 
-    toFlatListData(options) {
-        const rtn = [];
-        const {
-            searchValue
-        } = this.state;
-        options.forEach((option, index) => {
-            const label = _.isPlainObject(option) ? option.label : option;
-            const value = _.isPlainObject(option) ? option.value : option;
-            if (!searchValue || label.toLowerCase().includes(searchValue.toLowerCase())) {
-                rtn.push({
-                    label,
-                    value,
-                    key: index
-                });
-            }
-        });
-        return rtn;
-    }
-
     renderModalContent({item, index, separators}) {
-        const {
-            value,
-        } = this.props;
-        const isChecked = item.value === value;
         return (
             <ListItem>
-                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleValueChange(item.value)}>
+                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(item.value)}>
                     <Text>{item.label}</Text>
                     {
-                        <Icon style={isChecked ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={isChecked ? "md-radio-button-on" : "md-radio-button-off"}/>
+                        <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
                     }
                 </TouchableOpacity>
             </ListItem>
         )
     }
 
+    resolveSubLabel() {
+        const {
+            options,
+            placeholder,
+            value: selection
+        } = this.props;
+        // option can be array int, string or obj
+        const filtered = _.find(options, option => {
+            if (_.isPlainObject(option)) {
+                return selection === option.value;
+            } else {
+                return selection === option;
+            }
+        });
+        // Abbreviate it if too long
+        const subLabel = _.isPlainObject(filtered) ? filtered.value : filtered;
+        if (!subLabel) {
+            return placeholder;
+        } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
+            return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
+        }
+        return subLabel;
+    }
+
     render() {
         const {
             last,
             label,
-            value,
-            options,
             search,
-            placeholder
         } = this.props;
         const {
             isModalVisible,
-            searchValue
+            searchValue,
+            formattedOptions
         } = this.state;
-        const formattedOptions = this.toFlatListData(options);
-        const selection = _.find(formattedOptions, {value: value});
         // Pick first and check if is object. If true return the options.label
-        const subLabel = !selection ? placeholder : selection.label;
         return (
             <>
                 <FormRedirection
                     last={last}
                     label={label}
-                    subLabel={`${subLabel}`}
+                    subLabel={`${this.resolveSubLabel()}`}
                     onPress={() => this.handleModalOpen()}
                 />
                 <Modal

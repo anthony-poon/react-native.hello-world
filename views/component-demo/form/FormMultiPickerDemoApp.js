@@ -25,7 +25,7 @@ export default class FormMultiPickerDemoApp extends React.Component {
         for (let i = 0; i < 100; i++) {
             options1.push(lorem.generateWords(3));
         }
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 5; i++) {
             options2.push(i);
         }
         const value1 = Array.from(new Array(10), () => options1[Math.floor(Math.random() * options1.length)]);
@@ -54,7 +54,7 @@ export default class FormMultiPickerDemoApp extends React.Component {
                                 <FormMultiPicker label={"Likes Picker, but allow multiple"} last options={options1} value={value1} search={true} onValueChange={value1 => this.setState({value1})}/>
                             </ListGroup>
                             <ListGroup title={"Callback"}>
-                                <FormMultiPicker label={"Call back after closing"} last options={options2} value={value2} onValueChange={value2 => this.setState({value2})} onFinish={() => Alert.alert("Call Back", "You have selected: " + value2.join(", "))}/>
+                                <FormMultiPicker label={"Call back after closing"} last options={options2} value={value2} onValueChange={value2 => this.setState({value2})}/>
                             </ListGroup>
                         </Form>
                     </FormContainer>

@@ -15,20 +15,17 @@ const MAX_SUBLABEL_LENGTH = 50;
 
 export default class FormMultiPicker extends React.Component {
     state = {
-        formattedOptions: [],
         isModalVisible: false,
-        searchValue: ""
+        searchValue: "",
+        formattedOptions: [],
     };
 
-    // Picker do not need DerivedStateFromProps because options and selection is not stored in state.
-    // The selection of Picker is returned immediately (right after click and modal close)
-    // MultiPicker need to store selected value and call onValueChange after modal close, thus MultiPicker need states
-    // The options state is based on Props value, but need enrichment, thus getDerivedStateFromProps
-    static getDerivedStateFromProps(props, state) {
+    handleModalOpen() {
+        // TODO: Scroll to selected item on open?
         const {
             options,
-            value: selectValues
-        } = props;
+            value: selections
+        } = this.props;
         const formattedOptions = options.map((option, index) => {
             const label = _.isPlainObject(option) ? option.label : option;
             const value = _.isPlainObject(option) ? option.value : option;
@@ -36,89 +33,95 @@ export default class FormMultiPicker extends React.Component {
                 label,
                 value,
                 key: index,
-                isSelected: selectValues.includes(value)
-            };
+                isSelected: selections.includes(value)
+            }
         });
-        return {
-            ...state,
-            formattedOptions
-        }
-    }
-
-    handleModalOpen() {
-        // TODO: Scroll to selected item on open?
         this.setState({
             searchValue: "",
-            isModalVisible: true
+            isModalVisible: true,
+            formattedOptions
         })
     }
 
     handleModalClose() {
         const {
-            onFinish
+            onValueChange
         } = this.props;
+        const {
+            formattedOptions
+        } = this.state;
         this.setState({
             isModalVisible: false
-        }, onFinish);
+        }, () => {
+            onValueChange(_.filter(formattedOptions, option => option.isSelected).map(selection => selection.value));
+        });
     }
 
-    handleValueChange(newValue) {
+    handleToggle(index) {
         const {
-            onValueChange,
-            value: originalArray
-        } = this.props;
-        const newArray = _.xor(originalArray, [newValue]);
-        onValueChange(newArray);
+            formattedOptions
+        } = this.state;
+        const copy = [...formattedOptions];
+        copy[index].isSelected = !copy[index].isSelected;
+        this.setState({
+            formattedOptions: copy
+        })
     }
-
-
 
     renderModalContent({item, index, separators}) {
-        const {
-            value,
-        } = this.props;
-        const isChecked = value.includes(item.value);
         return (
             <ListItem>
-                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleValueChange(item.value)}>
+                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(index)}>
                     <Text>{item.label}</Text>
                     {
-                        <Icon style={isChecked ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={isChecked ? "md-radio-button-on" : "md-radio-button-off"}/>
+                        <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
                     }
                 </TouchableOpacity>
             </ListItem>
         )
     }
 
+    resolveSubLabel() {
+        const {
+            options,
+            placeholder,
+            value: selections
+        } = this.props;
+        // option can be array int, string or obj
+        const filtered = _.filter(options, option => {
+            if (_.isPlainObject(option) && selections.includes(option.value)) {
+                return selections.includes(option.value);
+            } else if (selections.includes(option)) {
+                return selections.includes(option);
+            }
+        });
+        // Abbreviate it if too long
+        const subLabel = filtered.join(", ");
+        if (!subLabel) {
+            return placeholder;
+        } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
+            return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
+        }
+        return subLabel;
+    }
+
     render() {
         const {
             last,
             label,
-            value,
             search,
-            placeholder
         } = this.props;
         const {
-            formattedOptions
-        } = this.state;
-        const {
             isModalVisible,
-            searchValue
+            searchValue,
+            formattedOptions,
         } = this.state;
-        // Get all selected options first
-        const selections = _.filter(formattedOptions, option => value.includes(option.value));
-        // Get the string representation of select value and join into a string
-        let subLabel = !selections ? placeholder : selections.map(s => s.value).join(", ");
-        // Abbreviate it if too long
-        if (subLabel.length > MAX_SUBLABEL_LENGTH) {
-            subLabel = subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
-        }
         return (
             <>
                 <FormRedirection
                     last={last}
                     label={label}
-                    subLabel={`${subLabel}`}
+                    subLabel={`${ this.resolveSubLabel() }`}
                     onPress={() => this.handleModalOpen()}
                 />
                 <Modal
@@ -182,7 +185,6 @@ FormMultiPicker.propTypes = {
         })
     ])).isRequired,
     onValueChange: PropTypes.func.isRequired,
-    onFinish: PropTypes.func
 };
 
 const styles = StyleSheet.create({
