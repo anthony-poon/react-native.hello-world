@@ -44,17 +44,8 @@ export default class FormPicker extends React.Component {
     }
 
     handleModalClose() {
-        const {
-            onValueChange
-        } = this.props;
-        const {
-            formattedOptions
-        } = this.state;
         this.setState({
             isModalVisible: false
-        }, () => {
-            const selectedOption = _.find(formattedOptions, option => option.isSelected);
-            onValueChange(!!selectedOption ? selectedOption.value : null);
         });
     }
 
@@ -62,12 +53,19 @@ export default class FormPicker extends React.Component {
         const {
             formattedOptions
         } = this.state;
+        const {
+            onValueChange
+        } = this.props;
         const copy = formattedOptions.map((option, index) => ({
             ...option,
             isSelected: toggleIndex === index
         }));
         this.setState({
-            formattedOptions: copy
+            formattedOptions: copy,
+            isModalVisible: false
+        }, () => {
+            const selectedOption = _.find(copy, option => option.isSelected);
+            onValueChange(!!selectedOption ? selectedOption.value : null);
         })
     }
 
