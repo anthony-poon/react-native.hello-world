@@ -127,6 +127,7 @@ FormToggle.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
+        ...SpacingStyle.py3,
         flexDirection: "row",
         flexGrow: 1,
         alignItems: "center",

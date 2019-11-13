@@ -44,17 +44,9 @@ const styles = StyleSheet.create({
         ...SpacingStyle.px3,
     },
     content: {
-        ...SpacingStyle.py3,
         flexGrow: 1,
     },
     border: {
         ...BorderStyle.borderBottom,
     },
-    lhs: {
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    rhs: {
-
-    }
 });

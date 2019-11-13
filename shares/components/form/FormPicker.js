@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
         ...SpacingStyle.px3
     },
     modalHeader: {
+        ...SpacingStyle.py2,
         flexDirection: "row",
         alignItems: "center"
     },
@@ -207,6 +208,7 @@ const styles = StyleSheet.create({
         ...TextStyle.secondary,
     },
     optionItemContainer: {
+        ...SpacingStyle.py3,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
