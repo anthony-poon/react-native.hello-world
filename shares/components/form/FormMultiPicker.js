@@ -1,17 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types";
-import {View, StyleSheet, ScrollView, TouchableOpacity, FlatList, TextInput} from "react-native";
+import {View, StyleSheet, TouchableOpacity, FlatList} from "react-native";
 import FormRedirection from "./FormRedirection";
 import {Text} from "native-base";
 import Modal from "react-native-modal";
-import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
+import {BackgroundStyle, SpacingStyle, TextStyle} from "../../styles";
 import _ from "lodash";
 import ListItem from "../list/ListItem";
 import TextButton from "../button/TextButton";
 import {Feather as Icon} from "@expo/vector-icons";
 import { SearchBar } from 'react-native-elements';
 
-const MAX_SUBLABEL_LENGTH = 50;
+const MAX_SUB_LABEL_LENGTH = 50;
 
 export default class FormMultiPicker extends React.Component {
     state = {
@@ -59,7 +59,7 @@ export default class FormMultiPicker extends React.Component {
 
     handleSubmit() {
         const {
-            onValueChange
+            onChange
         } = this.props;
         const {
             formattedOptions
@@ -67,7 +67,7 @@ export default class FormMultiPicker extends React.Component {
         this.setState({
             isModalVisible: false
         }, () => {
-            onValueChange(_.filter(formattedOptions, option => option.isSelected).map(selection => selection.value));
+            onChange(_.filter(formattedOptions, option => option.isSelected).map(selection => selection.value));
         });
     }
 
@@ -118,7 +118,7 @@ export default class FormMultiPicker extends React.Component {
         // option can be array int, string or obj
         let subLabel = _.reduce(options, (collector, option, index) => {
             if (_.isPlainObject(option) && selections.includes(option.value)) {
-                collector.push(option.value);
+                collector.push(option.label);
             } else if (selections.includes(option)) {
                 collector.push(option);
             }
@@ -128,8 +128,8 @@ export default class FormMultiPicker extends React.Component {
         subLabel = subLabel.join(", ");
         if (subLabel === "") {
             return placeholder;
-        } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
-            return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
+        } else if (subLabel.length > MAX_SUB_LABEL_LENGTH) {
+            return subLabel.slice(0, MAX_SUB_LABEL_LENGTH) + "...";
         }
         return subLabel;
     }
@@ -216,7 +216,7 @@ FormMultiPicker.propTypes = {
             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         })
     ])).isRequired,
-    onValueChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

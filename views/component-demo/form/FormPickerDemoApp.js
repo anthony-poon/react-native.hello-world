@@ -76,10 +76,10 @@ export default class FormPickerDemoApp extends React.Component {
                     <FormContainer>
                         <Form style={styles.form}>
                             <ListGroup title={"General"}>
-                                <FormPicker label={"Short List"} options={options1} value={value1} onValueChange={value1 => this.setState({value1})}/>
-                                <FormPicker label={"Long List"} options={options2} value={value2} search={true} onValueChange={value2 => this.setState({value2})}/>
-                                <FormPicker label={"Integer Value"} options={options3} value={value3} onValueChange={value3 => this.setState({value3})}/>
-                                <FormPicker last label={"Label Value Pair"} options={options4} value={value4} onValueChange={value4 => this.setState({value4})}/>
+                                <FormPicker label={"Short List"} options={options1} value={value1} onChange={value1 => this.setState({value1})}/>
+                                <FormPicker label={"Long List"} options={options2} value={value2} search={true} onChange={value2 => this.setState({value2})}/>
+                                <FormPicker label={"Integer Value"} options={options3} value={value3} onChange={value3 => this.setState({value3})}/>
+                                <FormPicker last label={"Label Value Pair"} options={options4} value={value4} onChange={value4 => this.setState({value4})}/>
                             </ListGroup>
                         </Form>
                     </FormContainer>

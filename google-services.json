@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "918582821381",
+    "firebase_url": "https://native-toolkit.firebaseio.com",
+    "project_id": "native-toolkit",
+    "storage_bucket": "native-toolkit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918582821381:android:e69c4908d78da6196d526c",
+        "android_client_info": {
+          "package_name": "com.anthony_poon.native_toolkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918582821381-f2l1hehsglsvefjep302cf0dfljg1l6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQOXDpXHeXXL3NFwXwZwAB1jVS1ULyUdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918582821381-f2l1hehsglsvefjep302cf0dfljg1l6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

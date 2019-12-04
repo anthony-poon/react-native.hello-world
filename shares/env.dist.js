@@ -6,11 +6,11 @@ const env = !!__DEV__ ? "__DEV__" : Constants.manifest.releaseChannel;
 const config = {
     "__DEV__": {
         DOTENV: "dev",
-        END_POINT_URL: "http://192.168.1.196:4080"
+        END_POINT_URL: "http://example.com"
     },
     "default": {
         DOTENV: "prod",
-        END_POINT_URL: "http://native-toolkit.anthony-poon.com"
+        END_POINT_URL: "http://example.com"
     }
 };
 

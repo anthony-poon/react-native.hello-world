@@ -12,15 +12,18 @@
         "expo": "^33.0.0",
         "expo-constants": "^7.0.1",
         "expo-font": "^5.0.1",
+        "expo-permissions": "latest",
         "jwt-decode": "^2.2.0",
         "react": "16.8.3",
         "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
         "react-native-elements": "^1.1.0",
         "react-native-modal": "^11.3.1",
         "react-native-web": "^0.11.4",
+        "react-native-webview": "^7.5.1",
         "react-redux": "^7.1.1",
         "redux": "^4.0.4",
-        "sentry-expo": "^2.0.1"
+        "sentry-expo": "^2.0.1",
+        "expo-web-browser": "latest"
     },
     "devDependencies": {
         "@expo/vector-icons": "latest",
@@ -37,7 +40,6 @@
         "native-base": "^2.13.5",
         "prop-types": "^15.7.2",
         "react-dom": "16.8",
-        "react-native-dotenv": "^0.2.0",
         "react-native-gesture-handler": "^1.3.0",
         "react-native-root-toast": "^3.1.2",
         "react-navigation": "^3.11.1",

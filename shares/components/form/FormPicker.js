@@ -1,17 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types";
-import {View, StyleSheet, ScrollView, TouchableOpacity, FlatList, TextInput} from "react-native";
+import {View, StyleSheet, TouchableOpacity, FlatList} from "react-native";
 import FormRedirection from "./FormRedirection";
 import {Text} from "native-base";
 import Modal from "react-native-modal";
-import {BackgroundStyle, BorderStyle, SpacingStyle, TextStyle} from "../../styles";
+import {BackgroundStyle, SpacingStyle, TextStyle} from "../../styles";
 import _ from "lodash";
 import ListItem from "../list/ListItem";
 import TextButton from "../button/TextButton";
 import {Ionicons as Icon} from "@expo/vector-icons";
 import { SearchBar } from 'react-native-elements';
 
-const MAX_SUBLABEL_LENGTH = 50;
+const MAX_SUB_LABEL_LENGTH = 50;
 
 export default class FormPicker extends React.Component {
     state = {
@@ -54,7 +54,7 @@ export default class FormPicker extends React.Component {
             formattedOptions
         } = this.state;
         const {
-            onValueChange
+            onChange
         } = this.props;
         const copy = formattedOptions.map((option, index) => ({
             ...option,
@@ -65,7 +65,7 @@ export default class FormPicker extends React.Component {
             isModalVisible: false
         }, () => {
             const selectedOption = _.find(copy, option => option.isSelected);
-            onValueChange(!!selectedOption ? selectedOption.value : null);
+            onChange(!!selectedOption ? selectedOption.value : null);
         })
     }
 
@@ -85,14 +85,16 @@ export default class FormPicker extends React.Component {
 
     renderModalContent({item, index, separators}) {
         return (
-            !item.isFiltered && (<ListItem>
-                <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(index)}>
-                    <Text>{item.label}</Text>
-                    {
-                        <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
-                    }
-                </TouchableOpacity>
-            </ListItem>)
+            !item.isFiltered && (
+                <ListItem>
+                    <TouchableOpacity style={styles.optionItemContainer} onPress={() => this.handleToggle(index)}>
+                        <Text>{item.label}</Text>
+                        {
+                            <Icon style={item.isSelected ? styles.optionItemIconChecked : styles.optionItemIconUnchecked } name={item.isSelected ? "md-radio-button-on" : "md-radio-button-off"}/>
+                        }
+                    </TouchableOpacity>
+                </ListItem>
+            )
         )
     }
 
@@ -111,11 +113,11 @@ export default class FormPicker extends React.Component {
             }
         });
         // Abbreviate it if too long
-        const subLabel = _.isPlainObject(filtered) ? filtered.value : filtered;
+        const subLabel = _.isPlainObject(filtered) ? filtered.label : filtered;
         if (filtered === undefined) {
             return placeholder;
-        } else if (subLabel.length > MAX_SUBLABEL_LENGTH) {
-            return subLabel.slice(0, MAX_SUBLABEL_LENGTH) + "...";
+        } else if (subLabel.length > MAX_SUB_LABEL_LENGTH) {
+            return subLabel.slice(0, MAX_SUB_LABEL_LENGTH) + "...";
         }
         return subLabel;
     }
@@ -200,7 +202,7 @@ FormPicker.propTypes = {
             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         })
     ])).isRequired,
-    onValueChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

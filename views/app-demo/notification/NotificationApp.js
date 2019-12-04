@@ -1,11 +1,17 @@
 import React from "react"
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {Container, Content} from "native-base";
-import {LoremIpsum} from "lorem-ipsum";
-import NotificationItem from "./components/NotificationItem";
-import moment from "moment";
 import _ from "lodash";
 import MultiSelectBar from "./components/MultiSelectBar";
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import LoaderView from "../../../shares/components/LoaderView";
+import FormContainer from "../../../shares/components/form/FormContainer";
+import ListGroup from "../../../shares/components/list/ListGroup";
+import FormTextInput from "../../../shares/components/form/FormTextInput";
+import ENV from "../../../shares/env";
+import FormRedirection from "../../../shares/components/form/FormRedirection";
+import * as WebBrowser from 'expo-web-browser';
 
 export default class NotificationApp extends React.Component{
     static navigationOptions = ({ navigation: { state: { params } } }) => {
@@ -15,37 +21,14 @@ export default class NotificationApp extends React.Component{
     };
 
     state = {
+        isLoading: true,
+        isError: false,
+        isSelectMode: false,
+        token: null,
+        message: null,
+        delay: "Now",
         notifications: [],
-        isSelectMode: false
     };
-
-    handleEnterSelectMode(selection) {
-        const copy = [...this.state.notifications];
-        copy.forEach((notification, index) => {
-            notification.isSelected = index === selection;
-            return notification;
-        });
-        this.setState({
-            notifications: copy,
-            isSelectMode: true
-        })
-    }
-
-    handleSelect(index){
-        const copy = [...this.state.notifications];
-        copy[index].isSelected = !copy[index].isSelected;
-        this.setState({
-            notifications: copy
-        })
-    }
-
-    handleRead(index) {
-        const copy = [...this.state.notifications];
-        copy[index].isUnread = false;
-        this.setState({
-            notifications: copy
-        })
-    }
 
     handleSelectAll(bool) {
         const copy = [...this.state.notifications];
@@ -59,26 +42,54 @@ export default class NotificationApp extends React.Component{
         })
     }
 
-    async componentDidMount() {
-        const lorem = new LoremIpsum();
-        const notifications = [];
-        for (let i = 0; i < 15; i++) {
-            const end = parseInt(moment().format("X"));
-            const start = parseInt(moment().subtract(1, "month").format("X"));
-            const timestamp = moment.unix(Math.floor(Math.random() * (end - start) + start));
-            notifications.push({
-                avatar: String.fromCharCode(Math.random() * 26 + 65),
-                title: lorem.generateWords(2),
-                content: lorem.generateWords(Math.floor(Math.random() * 5 + 15)),
-                timestamp: timestamp.fromNow(),
-                unix: timestamp,
-                isUnread: Math.round(Math.random()) === 1,
-                isSelected: false
-            })
+    async _initToken() {
+
+        if (Platform.OS === 'android') {
+            await Notifications.createChannelAndroidAsync('notification-app', {
+                name: 'Notification App',
+                description: "testing",
+                vibrate: true,
+                sound: true,
+            });
         }
-        this.setState({
-            notifications: _.sortBy(notifications, "unix").reverse()
-        })
+
+        // Check current permission, if not granted, prompt for permission, upload the token
+        let { status: status } = await Permissions.getAsync(
+            Permissions.NOTIFICATIONS
+        );
+
+        console.log('Initial status: ' + status);
+        if (status !== 'granted') {
+            // iOS only, In android it is asked during installation
+            status = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        }
+        console.log('End status: ' + status);
+        // Skip if user did not grant permission even if asked
+        // Push the push token to server
+        if (status === 'granted') {
+            await Notifications.presentLocalNotificationAsync({
+                title: 'Local Notification',
+                body: 'This is a message send locally',
+                android: {
+                    channelId: 'notification-app',
+                },
+            });
+            try {
+                const token = await Notifications.getExpoPushTokenAsync();
+                //await Messenger.registerToken(token);
+                this.setState({
+                    token,
+                    isLoading: false
+                })
+            } catch (e) {
+                console.error(e);
+            }
+
+        }
+    }
+
+    async componentDidMount() {
+        await this._initToken();
     }
 
     renderSelectBar() {
@@ -102,10 +113,21 @@ export default class NotificationApp extends React.Component{
         }
     }
 
+    async handleRedirect() {
+        const {
+            token
+        } = this.state;
+        const url = ENV.END_POINT_URL;
+        console.log(url);
+        await WebBrowser.openBrowserAsync(url  + `/views/notifications/${encodeURIComponent(token)}`);
+    }
+
     render() {
         const {
-            notifications,
             isSelectMode,
+            isError,
+            isLoading,
+            token
         } = this.state;
         return (
             <Container>
@@ -113,19 +135,16 @@ export default class NotificationApp extends React.Component{
                     !!isSelectMode && this.renderSelectBar()
                 }
                 <Content contentContainerStyle={styles.container}>
-                    {
-                        notifications.map((notification, index) => (
-                            <NotificationItem
-                                key={index}
-                                {...notification}
-                                last={index === notifications.length - 1}
-                                isSelectMode={isSelectMode}
-                                onPress={() => this.handleRead(index)}
-                                onLongPress={() => this.handleEnterSelectMode(index)}
-                                onSelect={() => this.handleSelect(index)}
-                            />
-                        ))
-                    }
+                    <LoaderView isLoading={isLoading} isError={isError}>
+                        <FormContainer>
+                            <ListGroup>
+                                <FormTextInput last label={"Your Device Token"} value={token} disabled/>
+                            </ListGroup>
+                            <ListGroup>
+                                <FormRedirection last label={"Send Notification"} onPress={() => this.handleRedirect()}/>
+                            </ListGroup>
+                        </FormContainer>
+                    </LoaderView>
                 </Content>
             </Container>
         );

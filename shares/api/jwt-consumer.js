@@ -1,6 +1,5 @@
 import {store} from "../../redux/store";
-
-const BASE_URL = "http://192.168.1.196:3000";
+import ENV from "../env";
 
 export default class JWTConsumer {
     constructor() {
@@ -14,7 +13,7 @@ export default class JWTConsumer {
     }
 
     resolveUrl(path, params) {
-        const url = BASE_URL + path;
+        const url = ENV.END_POINT_URL + path;
         return !params ? url : url + '?' + Object.entries(params)
             .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
             .join('&');
@@ -22,9 +21,9 @@ export default class JWTConsumer {
 
     ajaxOption () {
         return {
-            contentType: "application/json; charset=utf-8",
             headers: {
                 "Authorization": `Bearer ${this.jwt}`,
+                "Content-Type": "application/json; charset=utf-8",
             },
         }
     }

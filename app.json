@@ -27,6 +27,7 @@
         },
         "android": {
             "package": "com.anthony_poon.native_toolkit",
+            "googleServicesFile": "./google-services.json",
             "versionCode": 3
         },
         "hooks": {
